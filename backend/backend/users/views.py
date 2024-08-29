@@ -3,6 +3,7 @@ import jwt, datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
+from mixins.mixin import PermissionMixin
 from backend.users.models import User
 from backend.users.serializers import UserSerializer
 
@@ -20,7 +21,7 @@ class RegisterView(APIView):
 
 
 
-class LoginView(APIView):
+class LoginView(PermissionMixin,APIView):
     def post(self,request):
         email = request.data['email']
         password = request.data['password']
