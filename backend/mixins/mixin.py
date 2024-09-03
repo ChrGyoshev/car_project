@@ -10,11 +10,7 @@ class PermissionMixin:
     def dispatch(self,request, *args, **kwargs):
         token = request.COOKIES.get('jwt')
         if not token:
-            raise AuthenticationFailed('Unauthenticated')
-            
-
-     
-           
+            raise AuthenticationFailed('Unauthenticated')   
         return super().dispatch(request, *args, **kwargs)
     
 #check user from token
