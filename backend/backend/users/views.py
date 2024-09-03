@@ -3,7 +3,7 @@ import jwt, datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from mixins.mixin import PermissionMixin
+from mixins.mixin import GetUserTokenMixin, PermissionMixin
 from backend.users.models import User
 from backend.users.serializers import UserSerializer
 
@@ -21,7 +21,7 @@ class RegisterView(APIView):
 
 
 
-class LoginView(PermissionMixin,APIView):
+class LoginView(APIView):
     def post(self,request):
         email = request.data['email']
         password = request.data['password']
@@ -43,15 +43,17 @@ class LoginView(PermissionMixin,APIView):
         token = jwt.encode(payload, 'secret', algorithm='HS256')
         response = Response()
         response.set_cookie(key='jwt', value= token, httponly=True)
+       
         response.data = {
             'jwt': token,
+            
         }
         return response
 
 
 
 
-class UserView(APIView):
+class UserView(PermissionMixin,APIView):
     def get(self, request):
         token = request.COOKIES.get('jwt')
 
