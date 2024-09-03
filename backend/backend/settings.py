@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'backend.users',
+    'backend.cars',
 ]
 
 MIDDLEWARE = [

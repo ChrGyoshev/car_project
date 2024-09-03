@@ -19,7 +19,7 @@ class PermissionMixin:
     
 #check user from token
 class GetUserTokenMixin:
-    def get_user_token(self,request):
+    def get_user_from_token(self,request):
         token = request.COOKIES.get('jwt')
         payload = jwt.decode(token,'secret',algorithms=['HS256'])
         user =User.objects.filter(id=payload['id']).first()

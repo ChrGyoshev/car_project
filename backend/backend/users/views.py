@@ -9,16 +9,12 @@ from backend.users.serializers import UserSerializer
 
 
 
-# Create your views here.
-
 class RegisterView(APIView):
     def post(self,request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-
-
 
 
 class LoginView(APIView):
@@ -53,21 +49,11 @@ class LoginView(APIView):
 
 
 
-class UserView(PermissionMixin,APIView):
-    def get(self, request):
-        token = request.COOKIES.get('jwt')
+class UserView(PermissionMixin,GetUserTokenMixin,APIView):
+    def get(self,request):
+        user = self.get_user_from_token(request)
+        return Response(user)
 
-        if not token:
-            raise AuthenticationFailed('Unauthenticated')
-        
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated!')
-        
-        user = User.objects.filter(id=payload['id']).first()
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
     
 class EditProfileView(APIView):
     def put(self, request):
