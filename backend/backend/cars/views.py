@@ -4,6 +4,7 @@ from rest_framework.exceptions import AuthenticationFailed
 import jwt
 from django.contrib.auth import get_user_model
 from backend.cars.serializers import CarSerializer
+from mixins.mixin import GetUserTokenMixin, PermissionMixin
 
 
 User = get_user_model()
@@ -30,4 +31,15 @@ class CreateCar(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"message": "Car successfully created"}, status=200)
+    
+class ListAllCars(PermissionMixin,GetUserTokenMixin,APIView):
+    def get(self, request):
+        user_from_token = self.get_user_from_token(request)
+        user = User.objects.filter(id=user_from_token['id']).first()
+        cars = user.cars.all()
+        if not cars:
+            raise Exception('no cars found for this driver')
+        serializer = CarSerializer(cars,many=True)
+        return Response(serializer.data)
+        
 
