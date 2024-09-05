@@ -1,10 +1,13 @@
+from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
 from django.contrib.auth import get_user_model
+from backend.cars.models import Car
 from backend.cars.serializers import CarSerializer
 from mixins.mixin import GetUserTokenMixin, PermissionMixin
+from rest_framework.generics import RetrieveAPIView
 
 
 User = get_user_model()
@@ -41,5 +44,23 @@ class ListAllCars(PermissionMixin,GetUserTokenMixin,APIView):
             raise Exception('no cars found for this driver')
         serializer = CarSerializer(cars,many=True)
         return Response(serializer.data)
+    
+class ListSpecificCar(GetUserTokenMixin,APIView):
+    def get(self,request, *args, **kwargs):
+        car = Car.objects.filter(id=self.kwargs.get('pk')).first()
+        user_id_from_token = self.get_user_from_token(request)['id']
+        if car.owner.id == user_id_from_token:
+            serializer = CarSerializer(car) 
+            return Response(serializer.data)
+        raise PermissionDenied("you don't have permission to list this car")
+        
+        
+        
+
+    
+
+    
+        
+    
         
 
