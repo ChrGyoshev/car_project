@@ -1,6 +1,6 @@
 from django.urls import path
 
-from backend.cars.views import CreateCar, ListAllCars, ListSpecificCar
+from backend.cars.views import CreateCar, DeleteCar, ListAllCars, ListSpecificCar
 
 
 
@@ -8,4 +8,6 @@ urlpatterns = [
     path('create', CreateCar.as_view()),
     path('list', ListAllCars.as_view()),
     path('car/<int:pk>', ListSpecificCar.as_view()),
+    path('delete/<int:pk>', DeleteCar.as_view()),
+    
 ]

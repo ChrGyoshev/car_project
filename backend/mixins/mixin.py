@@ -2,6 +2,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import status
 import jwt
 from rest_framework.response import Response
+from backend.cars.models import Car
 from backend.users.serializers import UserSerializer
 from backend.users.models import User
 
@@ -21,5 +22,3 @@ class GetUserTokenMixin:
         user =User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         return serializer.data
-    
-    
