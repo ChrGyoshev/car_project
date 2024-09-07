@@ -1,4 +1,4 @@
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed,NotFound
 from rest_framework import status
 import jwt
 from rest_framework.response import Response
@@ -22,3 +22,13 @@ class GetUserTokenMixin:
         user =User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         return serializer.data
+
+class CheckCarOwnerMixin:
+    def check_owner(self, user, *args, **kwargs):
+        car = Car.objects.filter(id=self.kwargs.get('pk')).first()
+        if not car:
+            raise NotFound("car not found")
+        if car.owner.id == user['id']:
+            return car
+       
+        return False

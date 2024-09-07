@@ -6,11 +6,12 @@ import jwt
 from django.contrib.auth import get_user_model
 from backend.cars.models import Car
 from backend.cars.serializers import CarSerializer
-from mixins.mixin import GetUserTokenMixin, PermissionMixin
+from mixins.mixin import CheckCarOwnerMixin, GetUserTokenMixin, PermissionMixin
 from rest_framework.generics import RetrieveAPIView
 
 
 User = get_user_model()
+
 
 
 
@@ -40,30 +41,40 @@ class CreateCar(APIView):
 class ListAllCars(PermissionMixin,GetUserTokenMixin,APIView):
     def get(self, request):
         user_from_token = self.get_user_from_token(request)
-        user = User.objects.filter(id=user_from_token['id']).first()
-        cars = user.cars.all()
+        user_obj = User.objects.filter(id=user_from_token['id']).first()
+        cars = user_obj.cars.all()
         if not cars:
             raise Exception('no cars found for this driver')
         serializer = CarSerializer(cars,many=True)
         return Response(serializer.data)
     
-class ListSpecificCar(GetUserTokenMixin,APIView):
+class ListSpecificCar(GetUserTokenMixin,CheckCarOwnerMixin,APIView):
     def get(self,request, *args, **kwargs):
-        car = Car.objects.filter(id=self.kwargs.get('pk')).first()
-        user_id_from_token = self.get_user_from_token(request)['id']
-        if car.owner.id == user_id_from_token:
-            serializer = CarSerializer(car) 
+        user_id_from_token = self.get_user_from_token(request)
+        ownership_car = self.check_owner(user_id_from_token)
+        if ownership_car:
+            serializer = CarSerializer(ownership_car) 
             return Response(serializer.data)
         raise PermissionDenied("you don't have permission to list this")
         
-class DeleteCar(GetUserTokenMixin,APIView):
+class DeleteCar(GetUserTokenMixin,CheckCarOwnerMixin,APIView):
     def delete(self, request, *args, **kwargs):
-        car = Car.objects.filter(id=self.kwargs.get('pk')).first()
-        user_id_from_token = self.get_user_from_token(request)['id']
-        if car.owner.id == user_id_from_token:
-            car.delete()
+        user_id_from_token = self.get_user_from_token(request)
+        ownership_car = self.check_owner(user_id_from_token)
+        if ownership_car:
+            ownership_car.delete()
             return Response("Car successfully deleted")
         raise PermissionDenied("you don't have permission to delete this")
+    
+class EditCar(GetUserTokenMixin,CheckCarOwnerMixin,APIView):
+    def patch(self, request, *args, **kwargs):
+        user_id_from_token = self.get_user_from_token(request)
+        ownership_car= self.check_owner(user_id_from_token)
+        if ownership_car:
+            return True  # To be refactored
+        raise PermissionDenied('you dont have permission to edit this')
+       
+        
         
         
         
