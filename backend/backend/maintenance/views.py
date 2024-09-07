@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView 
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, NotFound
 
+from backend.maintenance.models import Maintenance
 from backend.maintenance.serializers import MaintenanceSerializer
 from backend.cars.models import Car
 from mixins.mixin import CheckCarOwnerMixin, GetUserTokenMixin, PermissionMixin
@@ -32,3 +33,21 @@ class ListCarMaintenancesView(PermissionMixin,CheckCarOwnerMixin,GetUserTokenMix
             serializer = MaintenanceSerializer(maintenance, many=True)
             return Response(serializer.data)
         raise PermissionDenied("You're not a owner of the car!")
+    
+    
+class ListSpecificCarMaintenancesView(PermissionMixin,CheckCarOwnerMixin,GetUserTokenMixin,APIView):
+    def get(self,request, *args, **kwargs):
+        try:   
+            maintenance_object = Maintenance.objects.get(id=self.kwargs.get('pk'))
+        except Maintenance.DoesNotExist:
+            raise NotFound("Maintenance object not found")
+
+        maintenance_car = maintenance_object.car.owner.id
+        user_from_token = self.get_user_from_token(request)
+        if user_from_token['id'] == maintenance_car:
+            serializer = MaintenanceSerializer(maintenance_object)
+            return Response(serializer.data)
+        raise PermissionDenied("You're not a owner of the car!")
+       
+
+        
