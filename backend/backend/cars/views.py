@@ -71,7 +71,10 @@ class EditCar(GetUserTokenMixin,CheckCarOwnerMixin,APIView):
         user_id_from_token = self.get_user_from_token(request)
         ownership_car= self.check_owner(user_id_from_token)
         if ownership_car:
-            return True  # To be refactored
+            serializer = CarSerializer(ownership_car, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
         raise PermissionDenied('you dont have permission to edit this')
        
         
