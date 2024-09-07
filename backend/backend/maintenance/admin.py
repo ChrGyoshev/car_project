@@ -6,5 +6,5 @@ from backend.maintenance.models import Maintenance
 
 @admin.register(Maintenance)
 class MaintenanceAdmin(admin.ModelAdmin):
-    list_display = ['date','mileage','next_mileage','description', 'car']
+    list_display = ['date', 'car', 'description', 'mileage','next_mileage']
     
