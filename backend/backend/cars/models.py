@@ -21,3 +21,9 @@ class Car(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cars')
     mileage = models.PositiveIntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.make} {self.model} ({self.year})"
+
+
+    
+

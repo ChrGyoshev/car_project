@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'backend.users',
     'backend.cars',
+    'backend.maintenance',
 ]
 
 MIDDLEWARE = [
