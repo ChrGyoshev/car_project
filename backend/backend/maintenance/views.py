@@ -48,6 +48,21 @@ class ListSpecificCarMaintenancesView(PermissionMixin,CheckCarOwnerMixin,GetUser
             serializer = MaintenanceSerializer(maintenance_object)
             return Response(serializer.data)
         raise PermissionDenied("You're not a owner of the car!")
+    
+class DeleteMaintenanceView(PermissionMixin,GetUserTokenMixin,APIView):
+    def delete(self, request,*args,**kwargs):
+        try:
+            maintenance_object = Maintenance.objects.get(id=self.kwargs.get('pk'))
+        except:
+            raise NotFound("Maintenance object not found")
+        
+        maintenance_car = maintenance_object.car.owner.id
+        user_from_token= self.get_user_from_token(request)
+        if user_from_token['id'] == maintenance_car:
+            maintenance_object.delete()
+            return Response("Maintenance deleted successfully")
+        raise PermissionDenied("You're not a owner of the car!")
+
        
 
         
