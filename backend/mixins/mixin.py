@@ -2,6 +2,7 @@ from rest_framework.exceptions import AuthenticationFailed,NotFound
 from rest_framework import status
 import jwt
 from rest_framework.response import Response
+from backend.maintenance.models import Maintenance
 from backend.cars.models import Car
 from backend.users.serializers import UserSerializer
 from backend.users.models import User
@@ -32,3 +33,15 @@ class CheckCarOwnerMixin:
             return car
        
         return False
+    
+
+class MaintenanceMixin:
+    def get_maintenance(self, request, *args, **kwargs):
+        try:
+            maintenance_object = Maintenance.objects.get(id=self.kwargs.get('pk'))
+        except:
+            raise NotFound("maintenance not found")
+        
+        maintenance_car = maintenance_object
+        return maintenance_car
+
