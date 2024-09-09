@@ -4,3 +4,9 @@
   justify-content: center;
   flex-direction: column;
 }
+
+@media (max-width: 576px) {
+  .navbar-nav {
+    text-align: center;
+  }
+}
