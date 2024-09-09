@@ -1,4 +1,5 @@
 import { Navbar, Nav, Container, NavLink } from "react-bootstrap";
+import styles from "./navBar.module.css";
 
 function NavBar() {
   return (
@@ -7,7 +8,7 @@ function NavBar() {
         <Container>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav>
+            <Nav className={styles.navbarCenteringItems}>
               <NavLink href="#">Home</NavLink>
               <NavLink href="#">Profile</NavLink>
               <NavLink href="#">Cars</NavLink>
