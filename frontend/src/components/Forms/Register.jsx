@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import { Col, Button, Row, Container, Card, Form, Modal } from "react-bootstrap";
 import Logo from "../../assets/main.png";
 import { registerUser } from "../../services/api.jsx";
+
 const Login = () => {
   const [formData, setFormData] = useState({});
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const HandleChange = (e) => {
     const { name, value } = e.target;
@@ -17,32 +23,41 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await registerUser(formData);
-      // Handle successful response here
-    } catch (err) {
-      if (err.response && err.response.data) {
-        // Extract the error messages from the response data
-        const errorData = err.response.data;
-        let errorMessage = "An error occurred.";
 
-        // Check if there's an email error and get the message
-        if (errorData.email && errorData.email.length > 0) {
-          errorMessage = errorData.email[0];
+      console.log("Registration successful", response);
+      // Set Modal content for success message
+      setModalTitle("Registration successful");
+      setModalContent(`You have registered successfully ${response.email}`);
+      setIsSuccess(true);
+      setShowModal(true);
+    } catch (error) {
+      let errorMessages = [];
+
+      for (const key in error) {
+        if (error[key] && Array.isArray(error[key])) {
+          error[key].forEach((message) => {
+            errorMessages.push(message);
+          });
         }
-
-        // Log and/or display the error message
-        console.log("Error:", errorMessage);
-        alert(errorMessage); // Or set an error state to display in the UI
-      } else {
-        // Handle unexpected errors
-        console.log("An unexpected error occurred:", err);
-        alert("An unexpected error occurred. Please try again.");
       }
+
+      //set modal for errors
+      setModalTitle("Registration Errors");
+      setModalContent(
+        <ul>
+          {errorMessages.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </ul>
+      );
+      setIsSuccess(false);
+      setShowModal(true);
     }
   };
 
   return (
     <>
-      <Container className="height mt-3">
+      <Container className="height mt-1">
         <Row className=" d-flex justify-content-center align-items-center">
           <Col md={8} lg={6} xs={12}>
             <div className="border-3 border-dark border"></div>
@@ -89,6 +104,22 @@ const Login = () => {
                       </Button>
                     </div>
                   </Form>
+
+                  {/* Modal for showing success or errors */}
+                  <Modal show={showModal} onHide={() => setShowModal(false)}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>{modalTitle}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>{modalContent}</Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        variant={isSuccess ? "success" : "secondary"}
+                        onClick={() => setShowModal(false)}
+                      >
+                        {isSuccess ? "OK" : "Close"}
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                 </div>
               </Card.Body>
             </Card>
