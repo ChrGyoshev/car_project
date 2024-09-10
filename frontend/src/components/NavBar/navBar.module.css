@@ -1,9 +1,8 @@
 /* Centering items for small screens */
 
-  @media (max-width: 576px) {
-    .navbarCenteringItems {
-      justify-content: center;
-      text-align: center;
-    }
+@media (max-width: 576px) {
+  .navbarCenteringItems {
+    justify-content: center;
+    text-align: start;
   }
-  
+}

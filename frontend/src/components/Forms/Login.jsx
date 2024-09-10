@@ -20,7 +20,7 @@ const Login = () => {
       <Container className="height">
         <Row className=" d-flex justify-content-center align-items-center">
           <Col md={8} lg={6} xs={12}>
-            <div className="border-3 border-primary border"></div>
+            <div className="border-3 border-dark border"></div>
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-4">
