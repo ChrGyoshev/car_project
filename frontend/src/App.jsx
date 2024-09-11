@@ -1,4 +1,5 @@
 import Register from "./components/Forms/Register";
+import Login from "./components/Forms/Login";
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
 import Index from "./components/Index/Index";
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
+          <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="/" element={<Index />} />
         </Routes>

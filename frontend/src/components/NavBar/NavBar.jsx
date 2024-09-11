@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./navBar.module.css";
 import Logo from "../../assets/main.png";
+import NavProfileDropdown from "./NavProfileDropdown";
 
 function NavBar() {
   const [expanded, setExpanded] = useState(false);
@@ -34,7 +35,7 @@ function NavBar() {
         bg="dark"
         variant="dark"
       >
-        <Container className="d-flex">
+        <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
               src={Logo}
@@ -51,24 +52,7 @@ function NavBar() {
             className="d-block d-sm-none"
             align="end" // Aligns dropdown menu to the right
           >
-            <NavDropdown.Item
-              as={Link}
-              to="/profile"
-              onClick={() => setExpanded(false)}
-            >
-              My Profile
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              as={Link}
-              to="/settings"
-              onClick={() => setExpanded(false)}
-            >
-              Settings
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#" onClick={() => setExpanded(false)}>
-              Logout
-            </NavDropdown.Item>
+            <NavProfileDropdown onClick={() => setExpanded(false)} />
           </NavDropdown>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
@@ -108,24 +92,7 @@ function NavBar() {
             className="ml-auto d-none d-md-block"
             align="end" // Aligns dropdown menu to the right
           >
-            <NavDropdown.Item
-              as={Link}
-              to="/profile"
-              onClick={() => setExpanded(false)}
-            >
-              My Profile
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              as={Link}
-              to="/settings"
-              onClick={() => setExpanded(false)}
-            >
-              Settings
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#" onClick={() => setExpanded(false)}>
-              Logout
-            </NavDropdown.Item>
+            <NavProfileDropdown onClick={() => setExpanded(false)} />
           </NavDropdown>
         </Container>
       </Navbar>

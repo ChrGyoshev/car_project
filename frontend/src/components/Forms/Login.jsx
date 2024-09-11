@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import Logo from "../../assets/main.png";
 const Login = () => {
   const [formData, setFormData] = useState({});
 
@@ -24,7 +26,14 @@ const Login = () => {
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-4">
-                  <h2 className="fw-bold text-uppercase mb-2">Brand</h2>
+                  <img
+                    src={Logo}
+                    width="60"
+                    height="60"
+                    className="d-inline-block align-top"
+                    alt="MyGarageHub logo"
+                  />
+                  <h2 className="fw-bold text-uppercase mb-2">MyGarage Hub</h2>
                   <p className="mb-5">Please enter your login and password!</p>
                   <Form className="mb-3" onSubmit={HandleSumit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -48,13 +57,7 @@ const Login = () => {
                         onChange={HandleChange}
                       />
                     </Form.Group>
-                    <div className="mb-3">
-                      <p className="small">
-                        <a className="text-primary" href="#!">
-                          Forgot password?
-                        </a>
-                      </p>
-                    </div>
+
                     <div className="d-grid text-center">
                       <Button variant="primary" type="submit">
                         Login
@@ -64,9 +67,10 @@ const Login = () => {
                   <div className="mt-3">
                     <p className="mb-0 text-center">
                       Don't have an account?{" "}
-                      <a href="{''}" className="text-primary fw-bold">
+                      <Link className="text-primary fw-bold" to={"/register"}>
+                        {" "}
                         Sign In
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </div>
