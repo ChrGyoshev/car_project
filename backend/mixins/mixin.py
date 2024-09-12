@@ -19,6 +19,8 @@ class PermissionMixin:
 class GetUserTokenMixin:
     def get_user_from_token(self,request):
         token = request.COOKIES.get('jwt')
+        if not token:
+            raise NotFound("Error no token")
         payload = jwt.decode(token,'secret',algorithms=['HS256'])
         user =User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)

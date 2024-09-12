@@ -38,7 +38,7 @@ class LoginView(APIView):
 
         token = jwt.encode(payload, 'secret', algorithm='HS256')
         response = Response()
-        response.set_cookie(key='jwt', value= token, httponly=True)
+        response.set_cookie(key='jwt', value= token, httponly=True, samesite="None", secure="Lax")
        
         response.data = {
             'jwt': token,
@@ -49,7 +49,7 @@ class LoginView(APIView):
 
 
 
-class UserView(PermissionMixin,GetUserTokenMixin,APIView):
+class UserView(GetUserTokenMixin,APIView):
     def get(self,request):
         user = self.get_user_from_token(request)
         return Response(user)

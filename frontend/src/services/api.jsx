@@ -1,5 +1,5 @@
-const RegisterURL = "http://192.168.1.21:8000/api/register"; // use localhost if not using docker-compose
-const LoginURL = "http://localhost:8000/api/login";
+const RegisterURL = "http://192.168.1.18:8000/api/register"; // use localhost if not using docker-compose
+const LoginURL = "http://127.0.0.1:8000/api/login";
 
 export async function registerUser(data) {
   try {
@@ -31,6 +31,7 @@ export async function loginUser(data) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(data),
     });
     const responseData = await response.json();

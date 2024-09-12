@@ -1,10 +1,34 @@
 import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Logo from "../../assets/Logo.png";
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Index = () => {
+  const Handler = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data); // Use or store the user data as needed
+      } else {
+        console.error("Failed to fetch user data:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    Handler();
+  }, []);
+
   return (
     <Container className={styles.containerMain}>
       <Row className="justify-content-center">
