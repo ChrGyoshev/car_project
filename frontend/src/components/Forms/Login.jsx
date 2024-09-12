@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import Logo from "../../assets/main.png";
+import { loginUser } from "../../services/api.jsx";
+
 const Login = () => {
   const [formData, setFormData] = useState({});
 
@@ -13,9 +15,14 @@ const Login = () => {
     });
   };
 
-  const HandleSumit = (e) => {
+  const HandleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await loginUser(formData);
+      console.log("login success", response);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -35,7 +42,7 @@ const Login = () => {
                   />
                   <h2 className="fw-bold text-uppercase mb-2">MyGarage Hub</h2>
                   <p className="mb-5">Please enter your login and password!</p>
-                  <Form className="mb-3" onSubmit={HandleSumit}>
+                  <Form className="mb-3" onSubmit={HandleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label className="text-center">
                         Email address
@@ -69,7 +76,7 @@ const Login = () => {
                       Don't have an account?{" "}
                       <Link className="text-primary fw-bold" to={"/register"}>
                         {" "}
-                        Sign In
+                        Sign Up
                       </Link>
                     </p>
                   </div>
