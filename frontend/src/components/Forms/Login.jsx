@@ -4,7 +4,7 @@ import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import Logo from "../../assets/main.png";
 import { loginUser } from "../../services/api.jsx";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({});
 
   const HandleChange = (e) => {
@@ -20,6 +20,7 @@ const Login = () => {
     try {
       const response = await loginUser(formData);
       console.log("login success", response);
+      onLogin();
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +87,6 @@ const Login = () => {
           </Col>
         </Row>
       </Container>
-     
     </>
   );
 };

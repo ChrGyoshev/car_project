@@ -7,3 +7,8 @@
   }
 }
 
+
+.navElement {
+  color: grey !important;
+  text-decoration: none !important;
+}

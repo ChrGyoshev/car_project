@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Col, Button, Row, Container, Card, Form, Modal } from "react-bootstrap";
+import {
+  Col,
+  Button,
+  Row,
+  Container,
+  Card,
+  Form,
+  Modal,
+} from "react-bootstrap";
 import Logo from "../../assets/main.png";
 import { registerUser } from "../../services/api.jsx";
 
@@ -72,6 +80,7 @@ const Login = () => {
                     alt="MyGarageHub logo"
                   />
                   <h2 className="fw-bold text-uppercase mb-2">MyGarage Hub</h2>
+
                   <h3 className="mb-5 mt-3">Register</h3>
                   <Form className="mb-3" onSubmit={HandleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">

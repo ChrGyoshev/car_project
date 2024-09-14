@@ -5,7 +5,8 @@ import styles from "./navBar.module.css";
 import Logo from "../../assets/main.png";
 import NavProfileDropdown from "./NavProfileDropdown";
 
-function NavBar() {
+function NavBar({ isLogged }) {
+  console.log("NavBar render - isLogged:", isLogged);
   const [expanded, setExpanded] = useState(false);
   const navbarRef = useRef(null);
 
@@ -86,14 +87,25 @@ function NavBar() {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <NavDropdown
-            title="Profile"
-            id="profile-dropdown"
-            className="ml-auto d-none d-md-block"
-            align="end" // Aligns dropdown menu to the right
-          >
-            <NavProfileDropdown onClick={() => setExpanded(false)} />
-          </NavDropdown>
+          {isLogged ? (
+            <NavDropdown
+              title="Profile"
+              id="profile-dropdown"
+              className="ml-auto d-none d-md-block"
+              align="end" // Aligns dropdown menu to the right
+            >
+              <NavProfileDropdown onClick={() => setExpanded(false)} />
+            </NavDropdown>
+          ) : (
+            <Nav.Link
+              as={Link}
+              to="login"
+              className={styles.navElement}
+              onClick={() => setExpanded(false)}
+            >
+              Login
+            </Nav.Link>
+          )}
         </Container>
       </Navbar>
     </>

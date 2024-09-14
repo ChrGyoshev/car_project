@@ -46,3 +46,25 @@ export async function loginUser(data) {
     throw error;
   }
 }
+
+export async function FetchLoggedUser(authenticated) {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/user", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      authenticated(true); // Use or store the user data as needed
+    } else {
+      console.error("Failed to fetch user data:", response.statusText);
+      authenticated(false);
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    authenticated(false);
+  }
+}
