@@ -3,15 +3,10 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Logo from "../../assets/Logo.png";
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { FetchLoggedUser } from "../../services/api";
 
 const Index = () => {
-
-  
-  
- 
-
   return (
     <Container className={styles.containerMain}>
       <Row className="justify-content-center">

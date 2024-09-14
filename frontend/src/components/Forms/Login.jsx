@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import {
+  Col,
+  Button,
+  Row,
+  Container,
+  Card,
+  Form,
+  Modal,
+} from "react-bootstrap";
 import Logo from "../../assets/main.png";
 import { loginUser } from "../../services/api.jsx";
 
 const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({});
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
 
   const HandleChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +34,14 @@ const Login = ({ onLogin }) => {
       console.log("login success", response);
       onLogin();
     } catch (error) {
-      console.log(error);
+      setModalTitle("Login Errors");
+      setModalContent(
+        <ul>
+          <li>{error.detail}</li>
+        </ul>
+      );
+
+      setShowModal(true);
     }
   };
   return (
@@ -72,6 +91,23 @@ const Login = ({ onLogin }) => {
                       </Button>
                     </div>
                   </Form>
+
+                  {/* Modal for showing success or errors */}
+                  <Modal show={showModal} onHide={() => setShowModal(false)}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>{modalTitle}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>{modalContent}</Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        variant={"secondary"}
+                        onClick={() => setShowModal(false)}
+                      >
+                        {  "Close"}
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+
                   <div className="mt-3">
                     <p className="mb-0 text-center">
                       Don't have an account?{" "}
