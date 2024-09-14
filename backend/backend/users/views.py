@@ -74,8 +74,11 @@ class EditProfileView(APIView):
 
 class LogOutView(APIView):
     def post(self, request):
-        response = Response()
-        response.delete_cookie('jwt')
+        response = Response() 
+        # response.delete_cookie('jwt')
+       
+        response.set_cookie(key='jwt', httponly=True, samesite="None", secure="True", max_age=1)
+        
         response.data = {
             'message': 'success logout',
         }

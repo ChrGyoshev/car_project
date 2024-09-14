@@ -12,9 +12,7 @@ const NavProfileDropdown = ({ onClick }) => {
           Settings
         </NavDropdown.Item>
         <NavDropdown.Divider />
-        <NavDropdown.Item href="#" onClick={onClick}>
-          Logout
-        </NavDropdown.Item>
+        <NavDropdown.Item onClick={onClick}>Logout</NavDropdown.Item>
       </>
     </>
   );

@@ -12,7 +12,6 @@ function App() {
 
   useEffect(() => {
     async function fetchUser() {
-      console.log("NavBar render - isLogged:", isLogged);
       await FetchLoggedUser(setIsLogged);
     }
     fetchUser();
@@ -21,9 +20,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBar isLogged={isLogged} />
+        <NavBar isLogged={isLogged} setIsLogged={setIsLogged} />
+
         <Routes>
-         
           <Route
             path="login"
             element={<Login onLogin={() => setIsLogged(true)} />}

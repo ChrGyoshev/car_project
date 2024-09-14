@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import styles from "./navBar.module.css";
 import Logo from "../../assets/main.png";
 import NavProfileDropdown from "./NavProfileDropdown";
+import { LogOut } from "../../services/api";
 
-function NavBar({ isLogged }) {
-  console.log("NavBar render - isLogged:", isLogged);
+function NavBar({ isLogged, setIsLogged }) {
   const [expanded, setExpanded] = useState(false);
   const navbarRef = useRef(null);
+ 
+
+ 
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -23,6 +26,13 @@ function NavBar({ isLogged }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [navbarRef]);
+
+  const LogOutHandler = () => {
+    setExpanded(false);
+    LogOut();
+    setIsLogged(false)
+    console.log("Log Out");
+  };
 
   return (
     <>
@@ -47,14 +57,25 @@ function NavBar({ isLogged }) {
             />
             MyGarageHub
           </Navbar.Brand>
-          <NavDropdown
-            title="Profile"
-            id="profile-dropdown"
-            className="d-block d-sm-none"
-            align="end" // Aligns dropdown menu to the right
-          >
-            <NavProfileDropdown onClick={() => setExpanded(false)} />
-          </NavDropdown>
+          {isLogged ? (
+            <NavDropdown
+              title="Profile"
+              id="profile-dropdown"
+              className="d-block d-sm-none"
+              align="end" // Aligns dropdown menu to the right
+            >
+              <NavProfileDropdown onClick={LogOutHandler} />
+            </NavDropdown>
+          ) : (
+            <Nav.Link
+              as={Link}
+              to="/login"
+              className={`d-block d-sm-none ${styles.navElement}`}
+              onClick={() => setExpanded(false)}
+            >
+              Login
+            </Nav.Link>
+          )}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -94,14 +115,13 @@ function NavBar({ isLogged }) {
               className="ml-auto d-none d-md-block"
               align="end" // Aligns dropdown menu to the right
             >
-              <NavProfileDropdown onClick={() => setExpanded(false)} />
+              <NavProfileDropdown onClick={LogOutHandler} />
             </NavDropdown>
           ) : (
             <Nav.Link
               as={Link}
-              to="login"
-              className={styles.navElement}
-              onClick={() => setExpanded(false)}
+              to="/login"
+              className={`ml-auto d-none d-md-block ${styles.navElement}`}
             >
               Login
             </Nav.Link>

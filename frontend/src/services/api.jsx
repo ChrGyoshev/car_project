@@ -1,5 +1,7 @@
 const RegisterURL = "http://192.168.1.18:8000/api/register"; // use localhost if not using docker-compose
 const LoginURL = "http://127.0.0.1:8000/api/login";
+const LogOutURL = "http://127.0.0.1:8000/api/logout";
+const LoggedUserURL = "http://127.0.0.1:8000/api/user";
 
 export async function registerUser(data) {
   try {
@@ -49,7 +51,7 @@ export async function loginUser(data) {
 
 export async function FetchLoggedUser(authenticated) {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/user", {
+    const response = await fetch(LoggedUserURL, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -66,5 +68,24 @@ export async function FetchLoggedUser(authenticated) {
   } catch (error) {
     console.error("Error fetching user data:", error);
     authenticated(false);
+  }
+}
+
+export async function LogOut() {
+  try {
+    const response = await fetch(LogOutURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+    } else {
+      console.log("Error logout");
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
