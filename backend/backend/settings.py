@@ -136,4 +136,5 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
+    'https://car-project-vye9.onrender.com',
 ]

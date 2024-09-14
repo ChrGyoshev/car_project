@@ -12,7 +12,9 @@ function App() {
 
   useEffect(() => {
     async function fetchUser() {
-      await FetchLoggedUser(setIsLogged);
+      const isAuthenticated = await FetchLoggedUser(isLogged);
+      console.log(isAuthenticated.data.email);
+      setIsLogged(isAuthenticated);
     }
     fetchUser();
   }, []);

@@ -1,7 +1,7 @@
-const RegisterURL = "http://192.168.1.18:8000/api/register"; // use localhost if not using docker-compose
-const LoginURL = "http://127.0.0.1:8000/api/login";
-const LogOutURL = "http://127.0.0.1:8000/api/logout";
-const LoggedUserURL = "http://127.0.0.1:8000/api/user";
+const RegisterURL = "https://car-project-vye9.onrender.com/api/register"; // use localhost if not using docker-compose
+const LoginURL = "https://car-project-vye9.onrender.com/api/login";
+const LogOutURL = "https://car-project-vye9.onrender.com/api/logout";
+const LoggedUserURL = "https://car-project-vye9.onrender.com/api/user";
 
 // const RegisterURL = "http://192.168.1.18:8000/api/register"; // use localhost if not using docker-compose
 // const LoginURL = "http://192.168.1.4:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
@@ -54,7 +54,7 @@ export async function loginUser(data) {
   }
 }
 
-export async function FetchLoggedUser(authenticated, setUser) {
+export async function FetchLoggedUser(authenticated) {
   try {
     const response = await fetch(LoggedUserURL, {
       method: "GET",
@@ -65,15 +65,14 @@ export async function FetchLoggedUser(authenticated, setUser) {
     if (response.ok) {
       const data = await response.json();
       console.log(data);
-      setUser(data);
-      authenticated(true); // Use or store the user data as needed
+      return { authenticated: true, data }; // Use or store the user data as needed
     } else {
       console.error("Failed to fetch user data:", response.statusText);
-      authenticated(false);
+      return false;
     }
   } catch (error) {
     console.error("Error fetching user data:", error);
-    authenticated(false);
+    return false;
   }
 }
 
