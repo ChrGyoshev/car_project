@@ -137,4 +137,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'https://car-project-vye9.onrender.com',
+    "https://carmaintenancechrisey.web.app/",
+    "carmaintenancechrisey.web.app/",
+]
+
+
+CORS_ALLOWED_ORIGINS = [
+     'http://localhost:3000',
+    'https://car-project-vye9.onrender.com',
+    "https://carmaintenancechrisey.web.app/",
+    "carmaintenancechrisey.web.app/",
+
 ]
