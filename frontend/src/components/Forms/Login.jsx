@@ -103,7 +103,7 @@ const Login = ({ onLogin }) => {
                         variant={"secondary"}
                         onClick={() => setShowModal(false)}
                       >
-                        {  "Close"}
+                        {"Close"}
                       </Button>
                     </Modal.Footer>
                   </Modal>

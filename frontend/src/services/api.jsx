@@ -4,9 +4,9 @@ const LogOutURL = "https://car-project-vye9.onrender.com/api/logout";
 const LoggedUserURL = "https://car-project-vye9.onrender.com/api/user";
 
 // const RegisterURL = "http://192.168.1.18:8000/api/register"; // use localhost if not using docker-compose
-// const LoginURL = "http://192.168.1.4:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
+// const LoginURL = "http://127.0.0.1:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
 // const LogOutURL = "http://192.168.1.4:8000/api/logout";
-// const LoggedUserURL = "http://192.168.1.4:8000/api/user";
+// const LoggedUserURL = "http://127.0.0.1:8000/api/user";
 
 export async function registerUser(data) {
   try {

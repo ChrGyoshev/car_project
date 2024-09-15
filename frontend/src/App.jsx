@@ -6,9 +6,11 @@ import Index from "./components/Index/Index";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FetchLoggedUser } from "./services/api";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     async function fetchUser() {
@@ -18,6 +20,12 @@ function App() {
     }
     fetchUser();
   }, []);
+
+  const Handler = async () => {
+    const isAuthenticated = await FetchLoggedUser(isLogged);
+    setEmail(isAuthenticated.data.email);
+    console.log(isAuthenticated.data.email);
+  };
 
   return (
     <>
@@ -32,6 +40,8 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="/" element={<Index />} />
         </Routes>
+        <Button onClick={Handler}>Click me</Button>
+        <h3> {email}</h3>
       </BrowserRouter>
     </>
   );
