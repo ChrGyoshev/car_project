@@ -10,22 +10,17 @@ import { Button } from "react-bootstrap";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
-  const [email, setEmail] = useState("");
+
+  const [username, setUserName] = useState("");
 
   useEffect(() => {
     async function fetchUser() {
       const isAuthenticated = await FetchLoggedUser(isLogged);
-      console.log(isAuthenticated.data.email);
-      setIsLogged(isAuthenticated);
+      setIsLogged(isAuthenticated.authenticated);
+      setUserName(isAuthenticated.data.email || "");
     }
     fetchUser();
-  }, []);
-
-  const Handler = async () => {
-    const isAuthenticated = await FetchLoggedUser(isLogged);
-    setEmail(isAuthenticated.data.email);
-    console.log(isAuthenticated.data.email);
-  };
+  }, [isLogged]);
 
   return (
     <>
@@ -38,10 +33,11 @@ function App() {
             element={<Login onLogin={() => setIsLogged(true)} />}
           />
           <Route path="register" element={<Register />} />
-          <Route path="/" element={<Index />} />
+          <Route
+            path="/"
+            element={<Index username={username} isLogged={isLogged} />}
+          />
         </Routes>
-        <Button onClick={Handler}>Click me</Button>
-        <h3> {email}</h3>
       </BrowserRouter>
     </>
   );

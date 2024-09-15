@@ -18,11 +18,27 @@ class PermissionMixin:
 #check user from token
 class GetUserTokenMixin:
     def get_user_from_token(self,request):
-        token = request.COOKIES.get('jwt')
-        if not token:
+       
+        auth_header = request.META.get('HTTP_AUTHORIZATION')
+       
+        if not auth_header:
             raise NotFound("Error no token")
-        payload = jwt.decode(token,'secret',algorithms=['HS256'])
-        user =User.objects.filter(id=payload['id']).first()
+        try:
+            token = auth_header.split(' ')[1]
+
+        except IndexError:
+            raise AuthenticationFailed('Token is missing in authorization header')
+        
+        #decode token
+        try:
+            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Token is expired')
+        except jwt.InvalidTokenError:
+            raise AuthenticationFailed('Token is invalid')
+        
+        #get user 
+        user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         return serializer.data
 

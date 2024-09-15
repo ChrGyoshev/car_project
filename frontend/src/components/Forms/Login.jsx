@@ -18,6 +18,7 @@ const Login = ({ onLogin }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState("");
+  const [jwt, setJwt] = useState("");
 
   const HandleChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +33,8 @@ const Login = ({ onLogin }) => {
     try {
       const response = await loginUser(formData);
       console.log("login success", response);
+      localStorage.setItem("jwt", response.jwt);
+
       onLogin();
     } catch (error) {
       setModalTitle("Login Errors");

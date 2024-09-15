@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FetchLoggedUser } from "../../services/api";
 
-const Index = () => {
+const Index = ({ username, isLogged }) => {
   return (
     <Container className={styles.containerMain}>
       <Row className="justify-content-center">
@@ -19,7 +19,9 @@ const Index = () => {
                 className="img-fluid mb-3"
                 style={{ maxWidth: "200px" }} // Adjust logo size
               />
-              <h2 className="mb-2">Welcome to MyGarage Hub</h2>
+              <h2 className="mb-2">
+                Welcome {isLogged ? username : ""} to MyGarage Hub
+              </h2>
               <p className="lead mb-0">
                 Your go-to app for managing and maintaining your car’s service
                 records, repairs, and more. MyGarage Hub makes car care easy and
