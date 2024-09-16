@@ -1,3 +1,24 @@
-.LinkTo {
-    text-decoration: none;
-}
+.profileFrame {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    /* Frame border */
+    border-radius: 20%; /* Rounded frame */
+    box-shadow: 0 4px 8px rgba(243, 242, 242, 0.1); /* Frame shadow */
+    max-width: 170px; 
+    margin-bottom: 0rem;/* Set a max-width for the frame */
+  }
+  
+  img {
+    border-radius: 20%; /* Rounded image to match frame */
+  }
+  
+  .profileDetails h5 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .profileDetails p {
+    margin-top: 0.2rem;
+    font-size: 1.1rem; /* Slightly larger text for better readability */
+  }
