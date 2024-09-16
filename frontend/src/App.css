@@ -12,3 +12,13 @@
 
 }
 
+
+@media (max-width: 576px) {
+  .containerMain {
+     margin-top: 4rem
+  }
+ }
+
+ .container-main {
+  margin-top: 6rem;
+ }

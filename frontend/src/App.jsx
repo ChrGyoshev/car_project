@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FetchLoggedUser } from "./services/api";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import ProfileDetails from "./components/Profile/ProfileDetails";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -37,6 +38,7 @@ function App() {
             path="/"
             element={<Index username={username} isLogged={isLogged} />}
           />
+          <Route path="/user/details" element={<ProfileDetails />} />
         </Routes>
       </BrowserRouter>
     </>

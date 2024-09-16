@@ -69,7 +69,6 @@ export async function FetchLoggedUser(authenticated) {
 
     if (response.ok) {
       const data = await response.json();
-      
 
       return { authenticated: true, data }; // Use or store the user data as needed
     } else {
@@ -79,24 +78,5 @@ export async function FetchLoggedUser(authenticated) {
   } catch (error) {
     console.error("Error fetching user data:", error);
     return false;
-  }
-}
-
-export async function LogOut() {
-  try {
-    const response = await fetch(LogOutURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-    } else {
-      console.log("Error logout");
-    }
-  } catch (error) {
-    console.log(error);
   }
 }

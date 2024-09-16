@@ -1,17 +1,14 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./navBar.module.css";
 import Logo from "../../assets/main.png";
 import NavProfileDropdown from "./NavProfileDropdown";
-import { LogOut } from "../../services/api";
 
 function NavBar({ isLogged, setIsLogged }) {
   const [expanded, setExpanded] = useState(false);
   const navbarRef = useRef(null);
- 
-
- 
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -29,9 +26,14 @@ function NavBar({ isLogged, setIsLogged }) {
 
   const LogOutHandler = () => {
     setExpanded(false);
-    LogOut();
-    setIsLogged(false)
+    localStorage.removeItem("jwt");
+    setIsLogged(false);
+    navigate("/");
     console.log("Log Out");
+  };
+
+  const ProfileDropdownButtonHandler = () => {
+    setExpanded(false);
   };
 
   return (
@@ -64,7 +66,10 @@ function NavBar({ isLogged, setIsLogged }) {
               className="d-block d-sm-none"
               align="end" // Aligns dropdown menu to the right
             >
-              <NavProfileDropdown onClick={LogOutHandler} />
+              <NavProfileDropdown
+                onClick={LogOutHandler}
+                buttonHandler={ProfileDropdownButtonHandler}
+              />
             </NavDropdown>
           ) : (
             <Nav.Link
@@ -115,7 +120,10 @@ function NavBar({ isLogged, setIsLogged }) {
               className="ml-auto d-none d-md-block"
               align="end" // Aligns dropdown menu to the right
             >
-              <NavProfileDropdown onClick={LogOutHandler} />
+              <NavProfileDropdown
+                onClick={LogOutHandler}
+                buttonHandler={ProfileDropdownButtonHandler}
+              />
             </NavDropdown>
           ) : (
             <Nav.Link

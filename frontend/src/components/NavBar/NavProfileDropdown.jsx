@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 
-const NavProfileDropdown = ({ onClick }) => {
+const NavProfileDropdown = ({ onClick, buttonHandler }) => {
   return (
     <>
       <>
-        <NavDropdown.Item as={Link} to="/profile" onClick={onClick}>
+        <NavDropdown.Item as={Link} to="/user/details" onClick={buttonHandler}>
           My Profile
         </NavDropdown.Item>
-        <NavDropdown.Item as={Link} to="/settings" onClick={onClick}>
+        <NavDropdown.Item as={Link} to="/user/settings" onClick={buttonHandler}>
           Settings
         </NavDropdown.Item>
         <NavDropdown.Divider />

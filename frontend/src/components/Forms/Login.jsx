@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Col,
   Button,
@@ -18,7 +18,7 @@ const Login = ({ onLogin }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState("");
-  const [jwt, setJwt] = useState("");
+  const navigate = useNavigate();
 
   const HandleChange = (e) => {
     const { name, value } = e.target;
@@ -34,8 +34,8 @@ const Login = ({ onLogin }) => {
       const response = await loginUser(formData);
       console.log("login success", response);
       localStorage.setItem("jwt", response.jwt);
-
       onLogin();
+      navigate("/");
     } catch (error) {
       setModalTitle("Login Errors");
       setModalContent(
