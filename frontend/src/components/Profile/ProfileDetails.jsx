@@ -29,7 +29,7 @@ const ProfileDetails = ({ user }) => {
   const [formData, setFormData] = useState([]);
 
   const SubmitHandler = () => {
-    setUserName(formData.email.split("@")[0]);
+    setUserName(formData.username);
     setUserEmail(formData.email);
 
     console.log(formData);
@@ -95,6 +95,7 @@ const ProfileDetails = ({ user }) => {
         handleCloseModal={handleCloseModal}
         changeHandler={changeHandler}
         SubmitHandler={SubmitHandler}
+        formData={formData}
       />
 
       <Modal show="" onHide={handleCloseModal} centered>

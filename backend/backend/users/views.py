@@ -57,9 +57,11 @@ class UserView(GetUserTokenMixin,APIView):
     
 class EditProfileView(APIView):
     def put(self, request):
-        token = request.COOKIES.get('jwt')
+        
+        token = request.META.get('HTTP_AUTHORIZATION')
         if not token:
             raise AuthenticationFailed('token not found')
+        token = token.split(" ")[1]
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:

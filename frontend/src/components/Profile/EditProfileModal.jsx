@@ -1,11 +1,19 @@
 import { Button, Modal, Form } from "react-bootstrap";
+import { EditUser } from "../../services/api.jsx";
 
 const EditProfileModal = ({
   showModal,
   handleCloseModal,
   changeHandler,
   SubmitHandler,
+  formData,
 }) => {
+  const Submitting = async (e) => {
+    e.preventDefault();
+    EditUser(formData);
+
+    SubmitHandler();
+  };
   return (
     <>
       <Modal show={showModal} onHide={handleCloseModal} centered>
@@ -15,25 +23,27 @@ const EditProfileModal = ({
         <Modal.Body>
           {/* Add form fields to edit profile information */}
           <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label className="text-center">Email address</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicUsername">
+              <Form.Label>Username</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="Enter email"
-                name="email"
+                type="username"
+                name="username"
+                placeholder="Username"
                 onChange={changeHandler}
-                autoComplete="email"
+                autoComplete="username"
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicPicture">
+              <Form.Label className="text-center">
+                Profile picture URL
+              </Form.Label>
               <Form.Control
-                type="password"
-                name="password"
-                placeholder="Password"
+                type="profile_picture"
+                placeholder="Profile picture URL"
+                name="profile_picture"
                 onChange={changeHandler}
-                autoComplete="current-password"
+                autoComplete="profile_picture"
               />
             </Form.Group>
           </Form>
@@ -42,7 +52,7 @@ const EditProfileModal = ({
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
-          <Button onClick={SubmitHandler} variant="primary">
+          <Button onClick={Submitting} variant="primary">
             Save Changes
           </Button>
         </Modal.Footer>

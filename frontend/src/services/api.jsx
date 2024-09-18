@@ -7,6 +7,7 @@ const RegisterURL = "http://127.0.01:8000/api/register"; // use localhost if not
 const LoginURL = "http://127.0.0.1:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
 const LogOutURL = "http://127.0.0.1:8000/api/logout";
 const LoggedUserURL = "http://127.0.0.1:8000/api/user";
+const UserEditURL = "http://127.0.0.1:8000/api/edit";
 
 export async function registerUser(data) {
   try {
@@ -78,5 +79,28 @@ export async function FetchLoggedUser(authenticated) {
   } catch (error) {
     console.error("Error fetching user data:", error);
     return false;
+  }
+}
+
+export async function EditUser(formData) {
+  try {
+    const jwt = localStorage.getItem("jwt");
+    const response = await fetch(UserEditURL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...(jwt && { Authorization: `Bearer ${jwt}` }),
+      },
+      body: JSON.stringify(formData),
+      credentials: "include",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      console.error(response.statusText);
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
