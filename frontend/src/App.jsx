@@ -19,6 +19,7 @@ function App() {
       const isAuthenticated = await FetchLoggedUser(isLogged);
       setIsLogged(isAuthenticated.authenticated);
       setUser(isAuthenticated.data || "");
+      console.log(isAuthenticated.data);
     }
     fetchUser();
   }, [isLogged]);
