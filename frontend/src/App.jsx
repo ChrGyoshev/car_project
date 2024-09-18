@@ -12,13 +12,13 @@ import ProfileDetails from "./components/Profile/ProfileDetails";
 function App() {
   const [isLogged, setIsLogged] = useState(false);
 
-  const [username, setUserName] = useState("");
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     async function fetchUser() {
       const isAuthenticated = await FetchLoggedUser(isLogged);
       setIsLogged(isAuthenticated.authenticated);
-      setUserName(isAuthenticated.data.email || "");
+      setUser(isAuthenticated.data || "");
     }
     fetchUser();
   }, [isLogged]);
@@ -36,9 +36,12 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route
             path="/"
-            element={<Index username={username} isLogged={isLogged} />}
+            element={<Index username={user.email} isLogged={isLogged} />}
           />
-          <Route path="/user/details" element={<ProfileDetails />} />
+          <Route
+            path="/user/details"
+            element={<ProfileDetails user={user} />}
+          />
         </Routes>
       </BrowserRouter>
     </>

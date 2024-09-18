@@ -1,17 +1,48 @@
 import React from "react";
-import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Modal,
+  Form,
+} from "react-bootstrap";
 import Logo from "../../assets/Logo.png";
 import styles from "./profiledetais.module.css";
 import ProfileDefault from "../../assets/profile-default.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
+import EditProfileModal from "./EditProfileModal";
 
-const ProfileDetails = () => {
+const ProfileDetails = ({ user }) => {
   const [showModal, setShowModal] = useState(false);
-
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const [userName, setUserName] = useState(user.email.split("@")[0]);
+  const [userEmail, setUserEmail] = useState(user.email);
+
+  const [error, setError] = useState("Hardcoded error message");
+
+  const [formData, setFormData] = useState([]);
+
+  const SubmitHandler = () => {
+    setUserName(formData.email.split("@")[0]);
+    setUserEmail(formData.email);
+
+    console.log(formData);
+    handleCloseModal();
+  };
+
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   return (
     <>
@@ -31,14 +62,14 @@ const ProfileDetails = () => {
 
                 <div className="mb-2">
                   <p>USERNAME</p>
-                  <h5 className="text-muted">Krischan</h5>
+                  <h5 className="text-muted">{userName}</h5>
                 </div>
 
                 {/* Profile details section */}
                 <div className={styles.profileDetails}>
                   <div className="mb-2">
                     <p>EMAIL</p>
-                    <h5 className="text-muted">krischan@abv.bg</h5>
+                    <h5 className="text-muted">{userEmail}</h5>
                   </div>
 
                   {/* Add more profile details here */}
@@ -46,7 +77,11 @@ const ProfileDetails = () => {
                 {/* Add more user details as needed */}
               </Card.Body>
               <Card.Footer>
-                <Link className={styles.LinkTo} to="#" onClick={handleShowModal}>
+                <Link
+                  className={styles.LinkTo}
+                  to="#"
+                  onClick={handleShowModal}
+                >
                   Edit Profile
                 </Link>
               </Card.Footer>
@@ -55,47 +90,22 @@ const ProfileDetails = () => {
         </Row>
       </Container>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered>
+      <EditProfileModal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        changeHandler={changeHandler}
+        SubmitHandler={SubmitHandler}
+      />
+
+      <Modal show="" onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Profile</Modal.Title>
+          <Modal.Title>Error</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* Add form fields to edit profile information */}
-          <form>
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">
-                Username
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="username"
-                defaultValue="Krischan"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                defaultValue="krischan@abv.bg"
-              />
-            </div>
-
-            {/* Add more fields as necessary */}
-          </form>
+          <p>{error}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleCloseModal}>
-            Save Changes
-          </Button>
+          <Button variant="secondary">Close</Button>
         </Modal.Footer>
       </Modal>
     </>
