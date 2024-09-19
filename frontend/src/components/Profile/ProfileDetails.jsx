@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
+import SpinnerBorder from "../../services/spinner";
 
 const ProfileDetails = ({ user, onUpdateUser }) => {
   const [showModal, setShowModal] = useState(false);
@@ -64,7 +65,7 @@ const ProfileDetails = ({ user, onUpdateUser }) => {
                     style={{ maxWidth: "150px", borderRadius: "50%" }}
                   />
                 </div>
-
+                
                 {/* Profile details section */}
 
                 <div className={styles.profileDetails}>
@@ -103,7 +104,7 @@ const ProfileDetails = ({ user, onUpdateUser }) => {
 
       <Modal show="" onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Error</Modal.Title>
+          <Modal.Title>Errors</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>{error}</p>

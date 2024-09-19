@@ -97,7 +97,7 @@ export async function EditUser(formData) {
     });
     if (response.ok) {
       const data = await response.json();
-      return data;
+      return { data, status: response.status };
     } else {
       console.error(response.statusText);
     }

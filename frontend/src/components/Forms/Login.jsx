@@ -88,7 +88,7 @@ const Login = ({ onLogin }) => {
                       />
                     </Form.Group>
 
-                    <div className="d-grid text-center">
+                    <div className=" d-grid text-center">
                       <Button variant="primary" type="submit">
                         Login
                       </Button>

@@ -107,7 +107,8 @@ const Login = () => {
                     <div className="mb-3">
                       <p className="small"></p>
                     </div>
-                    <div className="d-grid text-center">
+                    <div></div>
+                    <div className="d-grid text-center ">
                       <Button variant="primary" type="submit">
                         Register
                       </Button>
