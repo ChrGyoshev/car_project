@@ -2,6 +2,7 @@
 // const LoginURL = "https://car-project-1-v5k4.onrender.com/api/login";
 // const LogOutURL = "https://car-project-1-v5k4.onrender.com/api/logout";
 // const LoggedUserURL = "https://car-project-1-v5k4.onrender.com/api/user";
+// const UserEditURL = "https://car-project-1-v5k4.onrender.com/api/edit";
 
 const RegisterURL = "http://127.0.01:8000/api/register"; // use localhost if not using docker-compose
 const LoginURL = "http://127.0.0.1:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)

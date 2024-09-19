@@ -29,6 +29,7 @@ const EditProfileModal = ({
                 type="username"
                 name="username"
                 placeholder="Username"
+                value={formData.username}
                 onChange={changeHandler}
                 autoComplete="username"
               />
@@ -44,6 +45,7 @@ const EditProfileModal = ({
                 name="profile_picture"
                 onChange={changeHandler}
                 autoComplete="profile_picture"
+                value={formData.profile_picture}
               />
             </Form.Group>
           </Form>
@@ -51,6 +53,10 @@ const EditProfileModal = ({
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
+          </Button>
+
+          <Button onClick={handleCloseModal} variant="danger">
+            Delete Profile
           </Button>
           <Button onClick={Submitting} variant="primary">
             Save Changes

@@ -16,23 +16,28 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 
-const ProfileDetails = ({ user }) => {
+const ProfileDetails = ({ user, onUpdateUser }) => {
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
-
-  const [userName, setUserName] = useState(user.email.split("@")[0]);
-  const [userEmail, setUserEmail] = useState(user.email);
 
   const [error, setError] = useState("Hardcoded error message");
 
   const [formData, setFormData] = useState([]);
 
+  useEffect(() => {
+    setFormData({
+      username: user.username,
+      email: user.email,
+      profile_picture: user.profile_picture,
+    });
+  }, [user]);
+
   const SubmitHandler = () => {
-    setUserName(formData.username);
-    setUserEmail(formData.email);
+    onUpdateUser(formData);
 
     console.log(formData);
+
     handleCloseModal();
   };
 
@@ -53,37 +58,35 @@ const ProfileDetails = ({ user }) => {
               <Card.Body>
                 <div className={styles.profileFrame}>
                   <img
-                    src={ProfileDefault} // Use default if no image
+                    src={user.profile_picture || ProfileDefault}
                     alt="User Profile Picture"
                     className="img-fluid mb-3"
-                    style={{ maxWidth: "150px", borderRadius: "50%" }} // Rounded profile image
+                    style={{ maxWidth: "150px", borderRadius: "50%" }}
                   />
                 </div>
 
-                <div className="mb-2">
-                  <p>USERNAME</p>
-                  <h5 className="text-muted">{userName}</h5>
-                </div>
-
                 {/* Profile details section */}
-                <div className={styles.profileDetails}>
-                  <div className="mb-2">
-                    <p>EMAIL</p>
-                    <h5 className="text-muted">{userEmail}</h5>
-                  </div>
 
-                  {/* Add more profile details here */}
+                <div className={styles.profileDetails}>
+                  {user.username ? (
+                    <div className={styles.profileBox}>
+                      <p className={styles.profileLabel}>Username</p>
+                      <h5 className={styles.profileData}>{user.username}</h5>
+                    </div>
+                  ) : null}
+
+                  <div className={styles.profileBox}>
+                    <p className={styles.profileLabel}>Email</p>
+                    <h5 className={styles.profileData}>{formData.email}</h5>
+                  </div>
                 </div>
-                {/* Add more user details as needed */}
               </Card.Body>
-              <Card.Footer>
-                <Link
-                  className={styles.LinkTo}
-                  to="#"
-                  onClick={handleShowModal}
-                >
-                  Edit Profile
-                </Link>
+
+              <Card.Footer
+                className={`${styles.footer}`}
+                onClick={handleShowModal}
+              >
+                <Link className={styles.LinkTo}>Edit Profile</Link>
               </Card.Footer>
             </Card>
           </Col>

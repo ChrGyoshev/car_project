@@ -24,6 +24,13 @@ function App() {
     fetchUser();
   }, [isLogged]);
 
+  const handleUpdateUser = (updatedUser) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      ...updatedUser,
+    }));
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -37,11 +44,13 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route
             path="/"
-            element={<Index username={user.email} isLogged={isLogged} />}
+            element={<Index username={user.username} isLogged={isLogged} />}
           />
           <Route
             path="/user/details"
-            element={<ProfileDetails user={user} />}
+            element={
+              <ProfileDetails user={user} onUpdateUser={handleUpdateUser} />
+            }
           />
         </Routes>
       </BrowserRouter>

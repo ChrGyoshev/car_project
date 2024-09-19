@@ -22,3 +22,47 @@
     margin-top: 0.2rem;
     font-size: 1.1rem; /* Slightly larger text for better readability */
   }
+
+
+
+  .profileBox {
+    border: 1px solid #ddd;  /* Light border for the box */
+    border-radius: 8px;      /* Rounded corners */
+    padding: 1rem;         /* Space inside the box */
+    margin-bottom: .5rem;   /* Space between the boxes */
+    background-color: #f9f9f9; /* Slightly different background color for contrast */
+  }
+  
+  .profileLabel {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .profileData {
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: #000;
+  }
+  
+
+ .LinkTo {
+  color: white;
+  text-decoration: none;
+
+ }
+
+ .LinkTo:hover {
+  text-decoration: none;
+  color: white;
+  
+ }
+
+
+ .footer {
+  background-color: #495057;
+ }
+ .footer:hover {
+  background-color: #5e6770; /* New color on hover */
+  cursor: pointer;
+}
