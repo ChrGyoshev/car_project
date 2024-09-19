@@ -14,5 +14,29 @@
   .LinkTo {
    text-decoration: none;
 
+  }
+
+
+  .footer {
+   background-color: #495057;
+  }
+  .footer:hover {
+   background-color: #5e6770; /* New color on hover */
+   cursor: pointer;
+ }
+
+ .LinkTo {
+   color: white;
+   text-decoration: none;
+   background-color: #495057;
+   border: none;
+
+ 
+  }
+ 
+  .LinkTo:hover {
+   text-decoration: none;
+   color: white;
+   background-color: #5e6770;
    
   }

@@ -19,10 +19,8 @@ const Index = ({ username, isLogged }) => {
                 className="img-fluid mb-3"
                 style={{ maxWidth: "200px" }} // Adjust logo size
               />
-
-              <h2 className="mb-2">
-                Welcome {isLogged ? username : ""} to MyGarage Hub
-              </h2>
+              <h1>{username && username}</h1>
+              <h2 className="mb-2">Welcome to MyGarage Hub</h2>
 
               <p className="lead mb-0">
                 Your go-to app for managing and maintaining your car’s service
@@ -30,10 +28,16 @@ const Index = ({ username, isLogged }) => {
                 organized!
               </p>
             </Card.Body>
-            <Card.Footer>
-              <Link className={styles.LinkTo} to="/login">
-                Get Started
-              </Link>
+            <Card.Footer className={styles.footer}>
+              {username ? (
+                <Link className={styles.LinkTo} to="/cars">
+                  My Cars
+                </Link>
+              ) : (
+                <Link className={styles.LinkTo} to="/login">
+                  Get Started
+                </Link>
+              )}
             </Card.Footer>
           </Card>
         </Col>

@@ -8,9 +8,7 @@ const NavProfileDropdown = ({ onClick, buttonHandler }) => {
         <NavDropdown.Item as={Link} to="/user/details" onClick={buttonHandler}>
           My Profile
         </NavDropdown.Item>
-        <NavDropdown.Item as={Link} to="/user/settings" onClick={buttonHandler}>
-          Cars
-        </NavDropdown.Item>
+
         <NavDropdown.Divider />
         <NavDropdown.Item onClick={onClick}>Logout</NavDropdown.Item>
       </>
