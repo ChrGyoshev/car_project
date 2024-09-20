@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 import SpinnerBorder from "../../services/spinner";
 
-const ProfileDetails = ({ user, onUpdateUser }) => {
+const ProfileDetails = ({ user, onUpdateUser, logOff }) => {
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -96,10 +96,12 @@ const ProfileDetails = ({ user, onUpdateUser }) => {
 
       <EditProfileModal
         showModal={showModal}
+        handleShowModal={handleShowModal}
         handleCloseModal={handleCloseModal}
         changeHandler={changeHandler}
         SubmitHandler={SubmitHandler}
         formData={formData}
+        logOff={logOff}
       />
 
       <Modal show="" onHide={handleCloseModal} centered>

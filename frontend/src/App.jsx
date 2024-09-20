@@ -48,7 +48,11 @@ function App() {
           <Route
             path="/user/details"
             element={
-              <ProfileDetails user={user} onUpdateUser={handleUpdateUser} />
+              <ProfileDetails
+                user={user}
+                onUpdateUser={handleUpdateUser}
+                logOff={() => setIsLogged(false)}
+              />
             }
           />
         </Routes>

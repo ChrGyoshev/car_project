@@ -74,15 +74,19 @@ class EditProfileView(APIView):
 
 
 
-class LogOutView(APIView):
-    def post(self, request):
-        response = Response() 
-        # response.delete_cookie('jwt')
-       
-        response.set_cookie(key='jwt', httponly=True, samesite="None", secure="True", max_age=1)
-        
-        response.data = {
-            'message': 'success logout',
-        }
-        return response
-
+class DeleteVIew(APIView):
+    def delete(self, request):
+      token = request.META.get("HTTP_AUTHORIZATION")
+      if not token:
+          raise AuthenticationFailed("token not found")
+      token = token.split(" ")[1]
+      try:
+          payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+      except jwt.ExpiredSignatureError:
+          raise AuthenticationFailed('Unauthenticated')
+      user = User.objects.filter(id=payload['id']).first()
+      if not user:
+          return Response("User not found", status=404)
+      
+      user.delete()
+      return Response({"detail": 'User deleted successfully'}, status=204)

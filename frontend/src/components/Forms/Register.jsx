@@ -11,10 +11,12 @@ import {
 import Logo from "../../assets/main.png";
 import { registerUser } from "../../services/api.jsx";
 import SpinnerBorder from "../../services/spinner.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -40,6 +42,7 @@ const Login = () => {
       setModalContent(`You have registered successfully ${response.email}`);
       setIsSuccess(true);
       setShowModal(true);
+      navigate("/login");
     } catch (error) {
       let errorMessages = [];
 
