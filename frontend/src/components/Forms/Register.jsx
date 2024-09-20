@@ -42,7 +42,6 @@ const Login = () => {
       setModalContent(`You have registered successfully ${response.email}`);
       setIsSuccess(true);
       setShowModal(true);
-      navigate("/login");
     } catch (error) {
       let errorMessages = [];
 
@@ -131,7 +130,15 @@ const Login = () => {
                     </Form>
 
                     {/* Modal for showing success or errors */}
-                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                    <Modal
+                      show={showModal}
+                      onHide={() => {
+                        setShowModal(false);
+                        {
+                          isSuccess && navigate("/login");
+                        }
+                      }}
+                    >
                       <Modal.Header closeButton>
                         <Modal.Title>{modalTitle}</Modal.Title>
                       </Modal.Header>
@@ -139,7 +146,12 @@ const Login = () => {
                       <Modal.Footer>
                         <Button
                           variant={isSuccess ? "success" : "secondary"}
-                          onClick={() => setShowModal(false)}
+                          onClick={() => {
+                            setShowModal(false);
+                            {
+                              isSuccess && navigate("/login");
+                            }
+                          }}
                         >
                           {isSuccess ? "OK" : "Close"}
                         </Button>

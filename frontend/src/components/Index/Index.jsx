@@ -4,7 +4,7 @@ import Logo from "../../assets/Logo.png";
 import styles from "./index.module.css";
 import { useNavigate } from "react-router-dom";
 
-const Index = ({ username }) => {
+const Index = ({ username, isLogged }) => {
   const navigate = useNavigate();
   return (
     <Container className={styles.containerMain}>
@@ -31,13 +31,13 @@ const Index = ({ username }) => {
             <div className=" d-grid text-center">
               <Button
                 onClick={() =>
-                  username ? navigate("/cars") : navigate("/login")
+                  isLogged ? navigate("/cars") : navigate("/login")
                 }
                 className={`${styles.footer} `}
                 variant="primary"
                 type="submit"
               >
-                {username ? "My Cars" : "Get Started"}
+                {isLogged ? "My Cars" : "Get Started"}
               </Button>
             </div>
           </Card>
