@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Col,
@@ -85,6 +85,7 @@ const Login = ({ onLogin }) => {
                           placeholder="Enter email"
                           name="email"
                           onChange={HandleChange}
+                          autoComplete="email"
                         />
                       </Form.Group>
 
@@ -98,6 +99,7 @@ const Login = ({ onLogin }) => {
                           name="password"
                           placeholder="Password"
                           onChange={HandleChange}
+                          autoComplete="current-password"
                         />
                       </Form.Group>
 

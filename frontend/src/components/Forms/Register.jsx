@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Col,
   Button,
@@ -99,6 +99,7 @@ const Login = () => {
                           placeholder="Enter email"
                           name="email"
                           onChange={HandleChange}
+                          autocomplete="true"
                         />
                       </Form.Group>
 
@@ -112,6 +113,7 @@ const Login = () => {
                           name="password"
                           placeholder="Password"
                           onChange={HandleChange}
+                          autocomplete="current-password"
                         />
                       </Form.Group>
                       <div className="mb-3">

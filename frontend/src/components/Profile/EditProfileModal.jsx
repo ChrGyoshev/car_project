@@ -1,5 +1,5 @@
 import { Button, Modal, Form } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 import { EditUser } from "../../services/api.jsx";
 import { useState } from "react";
 import SpinnerBorder from "../../services/spinner.jsx";
@@ -14,6 +14,7 @@ const EditProfileModal = ({
   const [error, setError] = useState("");
   const [errorModal, setErrorModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const Submitting = async (e) => {
     e.preventDefault();
@@ -36,6 +37,12 @@ const EditProfileModal = ({
       setLoading(false);
     }
   };
+
+  const DeleteHandler = () => {
+    console.log("deleting");
+    setDeleteModal(true);
+  };
+
   return (
     <>
       <Modal show={showModal} onHide={handleCloseModal} centered>
@@ -45,6 +52,8 @@ const EditProfileModal = ({
         <Modal.Body>
           {loading ? (
             <SpinnerBorder />
+          ) : deleteModal ? (
+            <h2>Profile deleted</h2>
           ) : (
             <Form>
               <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -79,7 +88,7 @@ const EditProfileModal = ({
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
-          <Button onClick={handleCloseModal} variant="danger">
+          <Button onClick={DeleteHandler} variant="danger">
             Delete Profile
           </Button>
           <Button onClick={Submitting} variant="primary" disabled={loading}>

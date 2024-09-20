@@ -19,6 +19,7 @@
 
   .footer {
    background-color: #495057;
+   border: none;
   }
   .footer:hover {
    background-color: #5e6770; /* New color on hover */

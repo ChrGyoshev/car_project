@@ -2,11 +2,10 @@ import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Logo from "../../assets/Logo.png";
 import styles from "./index.module.css";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { FetchLoggedUser } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
-const Index = ({ username, isLogged }) => {
+const Index = ({ username }) => {
+  const navigate = useNavigate();
   return (
     <Container className={styles.containerMain}>
       <Row className="justify-content-center">
@@ -28,17 +27,19 @@ const Index = ({ username, isLogged }) => {
                 organized!
               </p>
             </Card.Body>
-            <Card.Footer className={styles.footer}>
-              {username ? (
-                <Link className={styles.LinkTo} to="/cars">
-                  My Cars
-                </Link>
-              ) : (
-                <Link className={styles.LinkTo} to="/login">
-                  Get Started
-                </Link>
-              )}
-            </Card.Footer>
+
+            <div className=" d-grid text-center">
+              <Button
+                onClick={() =>
+                  username ? navigate("/cars") : navigate("/login")
+                }
+                className={`${styles.footer} `}
+                variant="primary"
+                type="submit"
+              >
+                {username ? "My Cars" : "Get Started"}
+              </Button>
+            </div>
           </Card>
         </Col>
       </Row>
