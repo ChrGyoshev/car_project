@@ -1,3 +1,4 @@
+from uu import Error
 from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -39,13 +40,13 @@ class CreateCar(APIView):
         serializer.save()
         return Response({"message": "Car successfully created"}, status=200)
     
-class ListAllCars(PermissionMixin,GetUserTokenMixin,APIView):
+class ListAllCars(GetUserTokenMixin,APIView):
     def get(self, request):
         user_from_token = self.get_user_from_token(request)
         user_obj = User.objects.filter(id=user_from_token['id']).first()
         cars = user_obj.cars.all()
         if not cars:
-            raise Exception('no cars found for this driver')
+             return Response([], status=200)
         serializer = CarSerializer(cars,many=True)
         return Response(serializer.data)
     

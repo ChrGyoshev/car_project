@@ -5,12 +5,16 @@
 // const UserEditURL = "https://car-project-1-v5k4.onrender.com/api/edit";
 // const DeleteProfileURL = "https://car-project-1-v5k4.onrender.com/api/delete";
 
+// const GetUserCarsURL = "https://car-project-1-v5k4.onrender.com/api/cars/list"
+
 const RegisterURL = "http://127.0.01:8000/api/register"; // use localhost if not using docker-compose
 const LoginURL = "http://127.0.0.1:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
 const LogOutURL = "http://127.0.0.1:8000/api/logout";
 const LoggedUserURL = "http://127.0.0.1:8000/api/user";
 const UserEditURL = "http://127.0.0.1:8000/api/edit";
 const DeleteProfileURL = "http://127.0.0.1:8000/api/delete";
+
+const GetUserCarsURL = "http://127.0.0.1:8000/api/cars/list";
 
 export async function registerUser(data) {
   try {
@@ -125,4 +129,27 @@ export async function DeleteUser() {
       return { status: response.status };
     }
   } catch (error) {}
+}
+
+//  CARS APIS
+export async function GetUserCars() {
+  try {
+    const jwt = localStorage.getItem("jwt");
+    const response = await fetch(GetUserCarsURL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(jwt && { Authorization: `Bearer ${jwt}` }),
+      },
+      credentials: "include",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      return { status: response.status };
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
