@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import ProfileDetails from "./components/Profile/ProfileDetails";
 import Cars from "./components/Cars/Cars";
+import ModelDropdown from "./components/Cars/CarsOptions";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -55,8 +56,8 @@ function App() {
               />
             }
           />
-
           <Route path="/cars" element={<Cars user={user} />} />
+          <Route path="/test" element={<ModelDropdown />} />
         </Routes>
       </BrowserRouter>
     </>
