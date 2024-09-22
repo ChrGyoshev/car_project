@@ -10,9 +10,7 @@
     margin-bottom: 0rem;/* Set a max-width for the frame */
   }
   
-  img {
-    border-radius: 20%; /* Rounded image to match frame */
-  }
+
   
   .profileDetails h5 {
     margin-bottom: 0.5rem;

@@ -1,21 +1,12 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Modal,
-  Form,
-} from "react-bootstrap";
-import Logo from "../../assets/Logo.png";
+import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
+
 import styles from "./profiledetais.module.css";
 import ProfileDefault from "../../assets/profile-default.png";
 import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
-import SpinnerBorder from "../../services/spinner";
 
 const ProfileDetails = ({ user, onUpdateUser, logOff }) => {
   const [showModal, setShowModal] = useState(false);
@@ -65,7 +56,7 @@ const ProfileDetails = ({ user, onUpdateUser, logOff }) => {
                     style={{ maxWidth: "150px", borderRadius: "50%" }}
                   />
                 </div>
-                
+
                 {/* Profile details section */}
 
                 <div className={styles.profileDetails}>

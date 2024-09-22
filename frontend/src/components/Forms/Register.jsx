@@ -89,6 +89,7 @@ const Login = () => {
                     <h2 className="fw-bold text-uppercase mb-2">
                       MyGarage Hub
                     </h2>
+                    
 
                     <h3 className="mb-5 mt-3">Register</h3>
                     <Form className="mb-3" onSubmit={HandleSubmit}>
@@ -101,7 +102,7 @@ const Login = () => {
                           placeholder="Enter email"
                           name="email"
                           onChange={HandleChange}
-                          autocomplete="true"
+                          autoComplete="true"
                         />
                       </Form.Group>
 
@@ -115,7 +116,7 @@ const Login = () => {
                           name="password"
                           placeholder="Password"
                           onChange={HandleChange}
-                          autocomplete="current-password"
+                          autoComplete="current-password"
                         />
                       </Form.Group>
                       <div className="mb-3">

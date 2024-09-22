@@ -8,6 +8,7 @@ import { FetchLoggedUser } from "./services/api";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import ProfileDetails from "./components/Profile/ProfileDetails";
+import Cars from "./components/Cars/Cars";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -34,7 +35,6 @@ function App() {
     <>
       <BrowserRouter>
         <NavBar isLogged={isLogged} setIsLogged={setIsLogged} />
-
         <Routes>
           <Route
             path="login"
@@ -55,6 +55,8 @@ function App() {
               />
             }
           />
+
+          <Route path="/cars" element={<Cars user={user} />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,0 +1,12 @@
+.responsiveCard {
+    width: 100%;
+
+}
+
+
+
+@media (min-width: 768px) {
+    .responsiveCard {
+        width: 80%;
+    }
+}

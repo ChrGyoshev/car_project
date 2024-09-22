@@ -1,5 +1,5 @@
 .height {
-  height: 100vh; /* Full viewport height */
+  padding-top: 5rem; /* Full viewport height */
   display: flex;
   justify-content: center;
   flex-direction: column;

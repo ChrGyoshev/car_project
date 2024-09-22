@@ -53,7 +53,11 @@ const EditProfileModal = ({
         setDeleteModalContent("Your account has been deleted");
         logOff(); // Log the user off
         SubmitHandler(); // Perform any post-deletion actions
-        setDeleteModal(true); // Show the delete success modal
+        setDeleteModal(true);
+        // Show the delete success modal
+      } else {
+        setDeleteModalContent("Error deleting user. Try again later");
+        setDeleteModal(true);
       }
     } catch (error) {
       setDeleteModalContent("Error occurred");
@@ -85,7 +89,11 @@ const EditProfileModal = ({
   return (
     <>
       {/* Main Edit Modal */}
-      <Modal show={showModal && !deleteModal} onHide={handleCloseModal} centered>
+      <Modal
+        show={showModal && !deleteModal}
+        onHide={handleCloseModal}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
@@ -173,13 +181,13 @@ const EditProfileModal = ({
           <Modal.Title>Confirm Deletion</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
+          <p>
+            Are you sure you want to delete your profile? This action cannot be
+            undone.
+          </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={closeDeleteConfirmationModal}
-          >
+          <Button variant="secondary" onClick={closeDeleteConfirmationModal}>
             Cancel
           </Button>
           <Button
@@ -198,7 +206,9 @@ const EditProfileModal = ({
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>{deleteModalContent === "Error occurred" ? "Error" : "Success"}</Modal.Title>
+          <Modal.Title>
+            {deleteModalContent === "Error occurred" ? "Error" : "Success"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>{deleteModalContent}</p>
