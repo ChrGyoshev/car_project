@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 
 const Cars = ({ user }) => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchCars() {
       try {
         const carsData = await GetUserCars();
-        // Ensure carsData is valid and an array, otherwise set it to an empty array
         setData(carsData);
         console.log(data);
       } catch (error) {
@@ -21,7 +21,6 @@ const Cars = ({ user }) => {
     }
     fetchCars();
   }, []);
-  const navigate = useNavigate();
 
   return (
     <Container className="height mt-1">

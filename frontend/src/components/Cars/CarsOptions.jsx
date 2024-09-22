@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import styles from "./cars.module.css";
 
-const ModelDropdown = () => {
+const CarAdd = () => {
+  const [formData, setFormData] = useState({
+    make: "",
+    model: "",
+  });
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState("");
-  const availableMakes = ["Mitsubishi", "Mercedes", "Audi"]; // Makes array
-
-  const [selectedMake, setSelectedMake] = useState(""); // Default selected make
+  const [selectedMake, setSelectedMake] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const availableMakes = ["Mitsubishi", "Mercedes", "Audi", "BMW"].sort();
+  // Makes array
+  const years = Array.from({ length: 2024 - 1960 + 1 }, (_, i) => 1960 + i);
 
   // Fetch models based on the selected make
   useEffect(() => {
@@ -31,11 +37,32 @@ const ModelDropdown = () => {
 
   const handleModelChange = (event) => {
     setSelectedModel(event.target.value);
+
+    setFormData((prevModels) => ({
+      ...prevModels,
+      model: event.target.value,
+    }));
   };
 
   const handleMakeChange = (event) => {
     setSelectedMake(event.target.value);
-    setSelectedModel(""); // Reset model when make changes
+    setFormData((prevModels) => ({
+      ...prevModels,
+      make: event.target.value,
+      model: "",
+    }));
+  };
+
+  const handleChangeYear = (e) => {
+    setSelectedYear(e.target.value);
+    setFormData((prevModels) => ({
+      ...prevModels,
+      year: e.target.value,
+    }));
+  };
+
+  const SubmitHandler = () => {
+    console.log(formData);
   };
 
   return (
@@ -79,7 +106,7 @@ const ModelDropdown = () => {
                       onChange={handleModelChange}
                       className="form-select"
                     >
-                      <option value="">--Choose Model--</option>
+                      <option value="">--Please choose a model--</option>
                       {models.map((model, index) => (
                         <option key={index} value={model}>
                           {model}
@@ -92,7 +119,26 @@ const ModelDropdown = () => {
                       </Form.Text>
                     )}
                   </Form.Group>
+                  <Form.Group className="mb-4 w-100">
+                    <Form.Label className="fw-bold">Choose a Year</Form.Label>
+                    <Form.Select
+                      aria-label="Select year"
+                      id="year"
+                      value={selectedYear}
+                      onChange={handleChangeYear}
+                    >
+                      <option value="">--Select year--</option>
+                      {years.map((year) => (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
                 </form>
+                <div className="text-center">
+                  <Button onClick={SubmitHandler}>Submit</Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -102,4 +148,4 @@ const ModelDropdown = () => {
   );
 };
 
-export default ModelDropdown;
+export default CarAdd;
