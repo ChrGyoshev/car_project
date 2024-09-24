@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import styles from "./cars.module.css";
+import { AddCar } from "../../services/api";
 
 const CarAdd = () => {
-  const [formData, setFormData] = useState({
-    make: "",
-    model: "",
-  });
+  const [formData, setFormData] = useState({});
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedMake, setSelectedMake] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+
+  const [show, setShow] = useState(false);
+  const [responseMsg, setResponseMsg] = useState("");
+
   const availableMakes = ["Mitsubishi", "Mercedes", "Audi", "BMW"].sort();
   // Makes array
   const years = Array.from({ length: 2024 - 1960 + 1 }, (_, i) => 1960 + i);
@@ -20,16 +21,18 @@ const CarAdd = () => {
   useEffect(() => {
     const fetchModels = async () => {
       try {
-        const response = await fetch(
-          `https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/${selectedMake}?format=json`
-        );
-        const data = await response.json();
-        const modelNames = data.Results.map((model) => model.Model_Name).sort();
+        if (selectedMake) {
+          const response = await fetch(
+            `https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/${selectedMake}?format=json`
+          );
+          const data = await response.json();
+          const modelNames = data.Results.map(
+            (model) => model.Model_Name
+          ).sort();
 
-        setModels(modelNames);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+          setModels(modelNames);
+        }
+      } catch (err) {}
     };
 
     fetchModels();
@@ -54,15 +57,17 @@ const CarAdd = () => {
   };
 
   const handleChangeYear = (e) => {
-    setSelectedYear(e.target.value);
     setFormData((prevModels) => ({
       ...prevModels,
       year: e.target.value,
     }));
   };
 
-  const SubmitHandler = () => {
-    console.log(formData);
+  const SubmitHandler = async () => {
+    const response = await AddCar(formData);
+    setResponseMsg(response.message);
+    setShow(true);
+    setFormData({});
   };
 
   return (
@@ -78,7 +83,7 @@ const CarAdd = () => {
                     <Form.Select
                       aria-label="Select car make"
                       id="make-select"
-                      value={selectedMake}
+                      value={formData.make || ""}
                       onChange={handleMakeChange}
                       className="form-select"
                     >
@@ -89,11 +94,6 @@ const CarAdd = () => {
                         </option>
                       ))}
                     </Form.Select>
-                    {selectedMake && (
-                      <Form.Text className="text-muted">
-                        You selected: {selectedMake}
-                      </Form.Text>
-                    )}
                   </Form.Group>
 
                   {/* Car Model Select */}
@@ -102,7 +102,7 @@ const CarAdd = () => {
                     <Form.Select
                       aria-label="Select car model"
                       id="model-select"
-                      value={selectedModel}
+                      value={formData.model || ""}
                       onChange={handleModelChange}
                       className="form-select"
                     >
@@ -113,18 +113,13 @@ const CarAdd = () => {
                         </option>
                       ))}
                     </Form.Select>
-                    {selectedModel && (
-                      <Form.Text className="text-muted">
-                        You selected: {selectedModel}
-                      </Form.Text>
-                    )}
                   </Form.Group>
                   <Form.Group className="mb-4 w-100">
                     <Form.Label className="fw-bold">Choose a Year</Form.Label>
                     <Form.Select
                       aria-label="Select year"
                       id="year"
-                      value={selectedYear}
+                      value={formData.year || ""}
                       onChange={handleChangeYear}
                     >
                       <option value="">--Select year--</option>
@@ -141,6 +136,25 @@ const CarAdd = () => {
                 </div>
               </Card.Body>
             </Card>
+
+            <>
+              <Modal
+                show={show}
+                onHide={() => setShow(false)}
+                backdrop={true}
+                keyboard={true}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Adding Car</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{responseMsg}</Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={() => setShow(false)}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
           </Col>
         </Row>
       </Container>

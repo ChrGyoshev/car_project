@@ -25,13 +25,13 @@ const Cars = ({ user }) => {
   return (
     <Container className="height mt-1">
       <Row className="d-flex flex-column justify-content-center align-items-center mb-3">
-        <Button className="w-25 mb-3" onClick={() => navigate("/test")}>
+        <Button className="w-25 mb-3" onClick={() => navigate("/cars/add")}>
           Add Car
         </Button>
 
         {/* Iterate over the data array and render car cards */}
-        {data.map((car, index) => (
-          <Col md={8} lg={6} xs={12} key={index} className="mb-3">
+        {data.map((car) => (
+          <Col md={8} lg={6} xs={12} key={car.id} className="mb-3">
             <Card className={`shadow mx-auto ${styles.responsiveCard}`}>
               <Card.Img
                 variant="top"
@@ -60,7 +60,9 @@ const Cars = ({ user }) => {
                 </ListGroup>
 
                 <div className="text-center">
-                  <Button variant="primary">Maintenances</Button>
+                  <Button variant="primary" onClick={() => console.log(car.id)}>
+                    Maintenances
+                  </Button>
                 </div>
               </Card.Body>
             </Card>

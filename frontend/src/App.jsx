@@ -6,10 +6,9 @@ import Index from "./components/Index/Index";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FetchLoggedUser } from "./services/api";
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import ProfileDetails from "./components/Profile/ProfileDetails";
 import Cars from "./components/Cars/Cars";
-import CarAdd from "./components/Cars/CarsOptions";
+import CarAdd from "./components/Cars/CarAdd";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -57,7 +56,7 @@ function App() {
             }
           />
           <Route path="/cars" element={<Cars user={user} />} />
-          <Route path="/test" element={<CarAdd />} />
+          <Route path="/cars/add" element={<CarAdd />} />
         </Routes>
       </BrowserRouter>
     </>
