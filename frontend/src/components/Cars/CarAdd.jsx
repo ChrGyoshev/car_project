@@ -56,10 +56,12 @@ const CarAdd = () => {
     }));
   };
 
-  const handleChangeYear = (e) => {
-    setFormData((prevModels) => ({
-      ...prevModels,
-      year: e.target.value,
+  
+  const HandleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
   };
 
@@ -75,69 +77,7 @@ const CarAdd = () => {
       <Container className={`height mt-1`}>
         <Row className="d-flex justify-content-center align-items-center mb-5">
           <Col md={8} lg={6} xs={12}>
-            <Card className={`shadow-lg p-4 mx-auto ${styles.responsiveCard}`}>
-              <Card.Body>
-                <form>
-                  <Form.Group className="mb-4 w-100">
-                    <Form.Label className="fw-bold">Choose a Make</Form.Label>
-                    <Form.Select
-                      aria-label="Select car make"
-                      id="make-select"
-                      value={formData.make || ""}
-                      onChange={handleMakeChange}
-                      className="form-select"
-                    >
-                      <option value="">--Please choose a make--</option>
-                      {availableMakes.map((make, index) => (
-                        <option key={index} value={make}>
-                          {make}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-
-                  {/* Car Model Select */}
-                  <Form.Group className="mb-4 w-100">
-                    <Form.Label className="fw-bold">Choose a Model</Form.Label>
-                    <Form.Select
-                      aria-label="Select car model"
-                      id="model-select"
-                      value={formData.model || ""}
-                      onChange={handleModelChange}
-                      className="form-select"
-                    >
-                      <option value="">--Please choose a model--</option>
-                      {models.map((model, index) => (
-                        <option key={index} value={model}>
-                          {model}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Group className="mb-4 w-100">
-                    <Form.Label className="fw-bold">Choose a Year</Form.Label>
-                    <Form.Select
-                      aria-label="Select year"
-                      id="year"
-                      value={formData.year || ""}
-                      onChange={handleChangeYear}
-                    >
-                      <option value="">--Select year--</option>
-                      {years.map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                </form>
-                <div className="text-center">
-                  <Button onClick={SubmitHandler}>Submit</Button>
-                </div>
-              </Card.Body>
-            </Card>
-
-            <>
+            {show ? (
               <Modal
                 show={show}
                 onHide={() => setShow(false)}
@@ -154,7 +94,85 @@ const CarAdd = () => {
                   </Button>
                 </Modal.Footer>
               </Modal>
-            </>
+            ) : (
+              <Card
+                className={`shadow-lg p-4 mx-auto ${styles.responsiveCard}`}
+              >
+                <Card.Body>
+                  <form>
+                    <Form.Group className="mb-4 w-100">
+                      <Form.Label className="fw-bold">Choose a Make</Form.Label>
+                      <Form.Select
+                        aria-label="Select car make"
+                        id="make-select"
+                        value={formData.make || ""}
+                        onChange={handleMakeChange}
+                        className="form-select"
+                      >
+                        <option value="">--Please choose a make--</option>
+                        {availableMakes.map((make, index) => (
+                          <option key={index} value={make}>
+                            {make}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+
+                    {/* Car Model Select */}
+                    <Form.Group className="mb-4 w-100">
+                      <Form.Label className="fw-bold">
+                        Choose a Model
+                      </Form.Label>
+                      <Form.Select
+                        aria-label="Select car model"
+                        id="model-select"
+                        value={formData.model || ""}
+                        onChange={handleModelChange}
+                        className="form-select"
+                      >
+                        <option value="">--Please choose a model--</option>
+                        {models.map((model, index) => (
+                          <option key={index} value={model}>
+                            {model}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-4 w-100">
+                      <Form.Label className="fw-bold">Choose a Year</Form.Label>
+                      <Form.Select
+                        aria-label="Select year"
+                        id="year"
+                        name="year"
+                        value={formData.year || ""}
+                        onChange={HandleChange}
+                      >
+                        <option value="">--Select year--</option>
+                        {years.map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group className="mb-4 w-100">
+                      <Form.Label className="fw-bold">Mileage</Form.Label>
+                      <Form.Control
+                        type="number"
+                        name="mileage"
+                        id="mileage"
+                        value={formData.mileage || ""}
+                        onChange={HandleChange}
+                      ></Form.Control>
+                    </Form.Group>
+                  </form>
+                  <div className="text-center">
+                    <Button onClick={SubmitHandler}>Submit</Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            )}
           </Col>
         </Row>
       </Container>

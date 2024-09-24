@@ -60,7 +60,7 @@ const Cars = ({ user }) => {
                 </ListGroup>
 
                 <div className="text-center">
-                  <Button variant="primary" onClick={() => console.log(car.id)}>
+                  <Button variant="primary" onClick={() => console.log(car)}>
                     Maintenances
                   </Button>
                 </div>
