@@ -10,6 +10,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 const Cars = ({ user }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const [showEditCar, setShowEditCar] = useState(false);
 
   useEffect(() => {
     async function fetchCars() {
@@ -28,50 +29,61 @@ const Cars = ({ user }) => {
   return (
     <Container className="height mt-1">
       <Row className="d-flex flex-column justify-content-center align-items-center mb-3">
-        <Button className="w-25 mb-3" onClick={() => navigate("/cars/add")}>
-          Add Car
-        </Button>
+        {showEditCar ? (
+          <>
+            <h1>HI</h1>
+          </>
+        ) : (
+          <>
+            <Button className="w-25 mb-3" onClick={() => navigate("/cars/add")}>
+              Add Car
+            </Button>
 
-        {/* Iterate over the data array and render car cards */}
-        {data.map((car) => (
-          <Col md={8} lg={6} xs={12} key={car.id} className="mb-3">
-            <Card className={`shadow mx-auto ${styles.responsiveCard}`}>
-              <Card.Img
-                variant="top"
-                src={
-                  car.picture ||
-                  "https://via.placeholder.com/400x300.png?text=No+Image"
-                }
-                alt={`${car.make} ${car.model}`}
-              />
+            {/* Iterate over the data array and render car cards */}
+            {data.map((car) => (
+              <Col md={8} lg={6} xs={12} key={car.id} className="mb-3">
+                <Card className={`shadow mx-auto ${styles.responsiveCard}`}>
+                  <Card.Img
+                    variant="top"
+                    src={
+                      car.picture ||
+                      "https://via.placeholder.com/400x300.png?text=No+Image"
+                    }
+                    alt={`${car.make} ${car.model}`}
+                  />
 
-              <Card.Body className="position-relative">
-                <FontAwesomeIcon
-                  icon={faPenToSquare}
-                  className={styles.EditIcon}
-                />
-                <Card.Title className="fst-italic">
-                  {car.make} {car.model}
-                </Card.Title>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>
-                    <span className="fw-bold">Year: </span>
-                    {car.year}
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span className="fw-bold">Mileage: </span>
-                    {car.mileage ? car.mileage : "N/A"}
-                  </ListGroup.Item>
-                </ListGroup>
-                <div className="text-center">
-                  <Button variant="primary" onClick={() => console.log(car)}>
-                    Maintenances
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+                  <Card.Body className="position-relative">
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      className={styles.EditIcon}
+                    />
+                    <Card.Title className="fst-italic">
+                      {car.make} {car.model}
+                    </Card.Title>
+                    <ListGroup variant="flush">
+                      <ListGroup.Item>
+                        <span className="fw-bold">Year: </span>
+                        {car.year}
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <span className="fw-bold">Mileage: </span>
+                        {car.mileage ? car.mileage : "N/A"}
+                      </ListGroup.Item>
+                    </ListGroup>
+                    <div className="text-center">
+                      <Button
+                        variant="primary"
+                        onClick={() => console.log(car)}
+                      >
+                        Maintenances
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </>
+        )}
       </Row>
     </Container>
   );

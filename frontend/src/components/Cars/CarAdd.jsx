@@ -177,6 +177,16 @@ const CarAdd = () => {
                         onChange={HandleChange}
                       ></Form.Control>
                     </Form.Group>
+
+                    <Form.Group className="mb-4 w-100">
+                      <Form.Label className="fw-bold">Picture</Form.Label>
+                      <Form.Control
+                        name="picture"
+                        id="picture"
+                        value={formData.picture}
+                        onChange={HandleChange}
+                      ></Form.Control>
+                    </Form.Group>
                   </form>
                   <div className="text-center">
                     <Button onClick={SubmitHandler}>Submit</Button>
