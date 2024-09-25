@@ -5,7 +5,13 @@ import styles from "./cars.module.css";
 import { AddCar } from "../../services/api";
 
 const CarAdd = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    make: "",
+    model: "",
+    year: "",
+    mileage: 0,
+    picture: "",
+  });
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedMake, setSelectedMake] = useState("");
@@ -13,7 +19,13 @@ const CarAdd = () => {
   const [show, setShow] = useState(false);
   const [responseMsg, setResponseMsg] = useState("");
 
-  const availableMakes = ["Mitsubishi", "Mercedes", "Audi", "BMW"].sort();
+  const availableMakes = [
+    "Mitsubishi",
+    "Mercedes",
+    "Audi",
+    "BMW",
+    "Toyota",
+  ].sort();
   // Makes array
   const years = Array.from({ length: 2024 - 1960 + 1 }, (_, i) => 1960 + i);
 
@@ -56,7 +68,6 @@ const CarAdd = () => {
     }));
   };
 
-  
   const HandleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -105,7 +116,7 @@ const CarAdd = () => {
                       <Form.Select
                         aria-label="Select car make"
                         id="make-select"
-                        value={formData.make || ""}
+                        value={formData.make}
                         onChange={handleMakeChange}
                         className="form-select"
                       >
@@ -126,7 +137,7 @@ const CarAdd = () => {
                       <Form.Select
                         aria-label="Select car model"
                         id="model-select"
-                        value={formData.model || ""}
+                        value={formData.model}
                         onChange={handleModelChange}
                         className="form-select"
                       >
@@ -144,7 +155,7 @@ const CarAdd = () => {
                         aria-label="Select year"
                         id="year"
                         name="year"
-                        value={formData.year || ""}
+                        value={formData.year}
                         onChange={HandleChange}
                       >
                         <option value="">--Select year--</option>
@@ -162,7 +173,7 @@ const CarAdd = () => {
                         type="number"
                         name="mileage"
                         id="mileage"
-                        value={formData.mileage || ""}
+                        value={formData.mileage}
                         onChange={HandleChange}
                       ></Form.Control>
                     </Form.Group>

@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { GetUserCars } from "../../services/api";
 import { useEffect, useState } from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+
 const Cars = ({ user }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -42,11 +45,14 @@ const Cars = ({ user }) => {
                 alt={`${car.make} ${car.model}`}
               />
 
-              <Card.Body>
+              <Card.Body className="position-relative">
+                <FontAwesomeIcon
+                  icon={faPenToSquare}
+                  className={styles.EditIcon}
+                />
                 <Card.Title className="fst-italic">
                   {car.make} {car.model}
                 </Card.Title>
-
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <span className="fw-bold">Year: </span>
@@ -54,11 +60,9 @@ const Cars = ({ user }) => {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <span className="fw-bold">Mileage: </span>
-                    {car.mileage ? car.mileage : "N/A"}{" "}
-                    {/* Handle null mileage */}
+                    {car.mileage ? car.mileage : "N/A"}
                   </ListGroup.Item>
                 </ListGroup>
-
                 <div className="text-center">
                   <Button variant="primary" onClick={() => console.log(car)}>
                     Maintenances
