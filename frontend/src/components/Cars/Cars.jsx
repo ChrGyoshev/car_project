@@ -6,18 +6,19 @@ import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import CarEdit from "./CarEdit";
 
 const Cars = ({ user }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [showEditCar, setShowEditCar] = useState(false);
+  const [currentSelectedCar, setCurrentSelectedCar] = useState();
 
   useEffect(() => {
     async function fetchCars() {
       try {
         const carsData = await GetUserCars();
         setData(carsData);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching cars:", error);
         setData([]); // Set data to an empty array in case of error
@@ -26,13 +27,19 @@ const Cars = ({ user }) => {
     fetchCars();
   }, []);
 
+  const EditHandler = (car) => {
+    setShowEditCar(true);
+    setCurrentSelectedCar(car);
+  };
+
   return (
     <Container className="height mt-1">
       <Row className="d-flex flex-column justify-content-center align-items-center mb-3">
         {showEditCar ? (
-          <>
-            <h1>HI</h1>
-          </>
+          <CarEdit
+            car={currentSelectedCar}
+            hide={() => setShowEditCar(false)}
+          />
         ) : (
           <>
             <Button className="w-25 mb-3" onClick={() => navigate("/cars/add")}>
@@ -56,6 +63,7 @@ const Cars = ({ user }) => {
                     <FontAwesomeIcon
                       icon={faPenToSquare}
                       className={styles.EditIcon}
+                      onClick={() => EditHandler(car)}
                     />
                     <Card.Title className="fst-italic">
                       {car.make} {car.model}

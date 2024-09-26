@@ -21,3 +21,6 @@
    font-size: 1.5rem;
 }
 
+.EditIcon:hover {
+    cursor: pointer;
+}
