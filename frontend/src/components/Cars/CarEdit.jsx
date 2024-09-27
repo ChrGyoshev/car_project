@@ -36,7 +36,7 @@ export default function CarEdit({ car, hide, updateCars }) {
         setModalContent("Car edited successfully");
         updateCars(response.data);
       } else {
-        setModalContent("Error occured try again later");
+        setModalContent("Error occured try again later!");
       }
     } catch (err) {
       setModalContent("Error occured try again later");
@@ -62,7 +62,13 @@ export default function CarEdit({ car, hide, updateCars }) {
                 </Modal.Header>
                 <Modal.Body>{modalContent}</Modal.Body>
                 <Modal.Footer>
-                  <Button variant="secondary" onClick={() => setShow(true)}>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      setShow(false);
+                      hide();
+                    }}
+                  >
                     Close
                   </Button>
                 </Modal.Footer>

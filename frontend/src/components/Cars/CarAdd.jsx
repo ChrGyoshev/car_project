@@ -4,6 +4,9 @@ import Form from "react-bootstrap/Form";
 import styles from "./cars.module.css";
 import { AddCar } from "../../services/api";
 
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../firebase";
+
 const CarAdd = () => {
   const [formData, setFormData] = useState({
     make: "",
@@ -18,6 +21,7 @@ const CarAdd = () => {
 
   const [show, setShow] = useState(false);
   const [responseMsg, setResponseMsg] = useState("");
+  const [file, setFile] = useState(null);
 
   const availableMakes = [
     "Mitsubishi",
@@ -77,10 +81,40 @@ const CarAdd = () => {
   };
 
   const SubmitHandler = async () => {
-    const response = await AddCar(formData);
+    const uploadedPictureUrl = await handleUpload();
+    if (!uploadedPictureUrl) {
+      setResponseMsg("Failed to upload the picture");
+      setShow(true);
+    }
+    const updatedFormData = { ...formData, picture: uploadedPictureUrl };
+
+    const response = await AddCar(updatedFormData);
     setResponseMsg(response.message);
     setShow(true);
     setFormData({});
+  };
+
+  //  Upload picture logic here:
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!file) return null;
+
+    try {
+      const storageRef = ref(storage, `images/${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      console.log("Uploaded a file!", snapshot);
+
+      const url = await getDownloadURL(snapshot.ref);
+      console.log("File available at", url);
+      return url;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      return null;
+    }
   };
 
   return (
@@ -178,13 +212,23 @@ const CarAdd = () => {
                       ></Form.Control>
                     </Form.Group>
 
-                    <Form.Group className="mb-4 w-100">
+                    {/* <Form.Group className="mb-4 w-100">
                       <Form.Label className="fw-bold">Picture</Form.Label>
                       <Form.Control
                         name="picture"
                         id="picture"
                         value={formData.picture}
                         onChange={HandleChange}
+                      ></Form.Control>
+                    </Form.Group> */}
+
+                    <Form.Group className="mb-4 w-100">
+                      <Form.Label className="fw-bold">Picture</Form.Label>
+                      <Form.Control
+                        type="file"
+                        name="picture"
+                        id="picture"
+                        onChange={handleFileChange}
                       ></Form.Control>
                     </Form.Group>
                   </form>

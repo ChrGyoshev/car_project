@@ -167,3 +167,4 @@ cython_debug/
 **/.firebase
 **/.firebaserc
 firebase.json
+firebase.js
