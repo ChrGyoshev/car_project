@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import styles from "./cars.module.css";
 import { EditCar } from "../../services/api";
+import PictureUpload from "./CarPictureUpload";
 
 export default function CarEdit({ car, hide, updateCars }) {
   const [show, setShow] = useState(false);
@@ -28,10 +29,22 @@ export default function CarEdit({ car, hide, updateCars }) {
     }));
   };
 
-  const SubmitHandler = async () => {
+  const handleUploadComplete = (uploadedPictureUrl) => {
+    // If no new picture is uploaded
+    if (!uploadedPictureUrl) {
+      uploadedPictureUrl = car.picture; // Retain the existing picture
+
+      setShow(true);
+    }
+
+    const updatedFormData = { ...formData, picture: uploadedPictureUrl };
+    submitCarData(updatedFormData);
+  };
+
+  const submitCarData = async (updatedFormData) => {
     setShow(true);
     try {
-      const response = await EditCar(formData, car.id);
+      const response = await EditCar(updatedFormData, car.id);
       if (response.status === 200) {
         setModalContent("Car edited successfully");
         updateCars(response.data);
@@ -41,7 +54,10 @@ export default function CarEdit({ car, hide, updateCars }) {
     } catch (err) {
       setModalContent("Error occured try again later");
     }
+
+    setFormData({ make: "", model: "", year: "", mileage: 0, picture: "" });
   };
+
   return (
     <>
       <Container className={`height mt-1`}>
@@ -115,10 +131,13 @@ export default function CarEdit({ car, hide, updateCars }) {
                       ></Form.Control>
                     </Form.Group>
                   </form>
+                  <PictureUpload
+                    onUploadComplete={handleUploadComplete}
+                    car={car}
+                  />
                   <div className="text-center"></div>
                 </Card.Body>
                 <div className="d-flex justify-content-end gap-2">
-                  <Button onClick={SubmitHandler}>Save changes</Button>
                   <Button variant="danger" className="" onClick={hide}>
                     Cancel
                   </Button>

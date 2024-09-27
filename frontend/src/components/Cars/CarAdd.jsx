@@ -3,9 +3,7 @@ import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import styles from "./cars.module.css";
 import { AddCar } from "../../services/api";
-
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../firebase";
+import PictureUpload from "./CarPictureUpload";
 
 const CarAdd = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +19,6 @@ const CarAdd = () => {
 
   const [show, setShow] = useState(false);
   const [responseMsg, setResponseMsg] = useState("");
-  const [file, setFile] = useState(null);
 
   const availableMakes = [
     "Mitsubishi",
@@ -80,41 +77,18 @@ const CarAdd = () => {
     }));
   };
 
-  const SubmitHandler = async () => {
-    const uploadedPictureUrl = await handleUpload();
-    if (!uploadedPictureUrl) {
-      setResponseMsg("Failed to upload the picture");
-      setShow(true);
-    }
-    const updatedFormData = { ...formData, picture: uploadedPictureUrl };
+  //  Upload picture logic here:
 
+  const handleUploadComplete = (uploadedPictureUrl) => {
+    const updatedFormData = { ...formData, picture: uploadedPictureUrl };
+    submitCarData(updatedFormData);
+  };
+
+  const submitCarData = async (updatedFormData) => {
     const response = await AddCar(updatedFormData);
     setResponseMsg(response.message);
     setShow(true);
-    setFormData({});
-  };
-
-  //  Upload picture logic here:
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    if (!file) return null;
-
-    try {
-      const storageRef = ref(storage, `images/${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      console.log("Uploaded a file!", snapshot);
-
-      const url = await getDownloadURL(snapshot.ref);
-      console.log("File available at", url);
-      return url;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      return null;
-    }
+    setFormData({ make: "", model: "", year: "", mileage: 0, picture: "" });
   };
 
   return (
@@ -222,19 +196,8 @@ const CarAdd = () => {
                       ></Form.Control>
                     </Form.Group> */}
 
-                    <Form.Group className="mb-4 w-100">
-                      <Form.Label className="fw-bold">Picture</Form.Label>
-                      <Form.Control
-                        type="file"
-                        name="picture"
-                        id="picture"
-                        onChange={handleFileChange}
-                      ></Form.Control>
-                    </Form.Group>
+                    <PictureUpload onUploadComplete={handleUploadComplete} />
                   </form>
-                  <div className="text-center">
-                    <Button onClick={SubmitHandler}>Submit</Button>
-                  </div>
                 </Card.Body>
               </Card>
             )}
