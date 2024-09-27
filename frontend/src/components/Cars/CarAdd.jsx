@@ -86,8 +86,11 @@ const CarAdd = () => {
 
   const submitCarData = async (updatedFormData) => {
     const response = await AddCar(updatedFormData);
-    setResponseMsg(response.message);
+    if (response.errors) {
+      console.log(response.errors);
+    }
     setShow(true);
+    setResponseMsg("Car created successfully");
     setFormData({ make: "", model: "", year: "", mileage: 0, picture: "" });
   };
 

@@ -174,7 +174,12 @@ export async function AddCar(data) {
       const data = await response.json();
       return data;
     } else {
-      return { status: response.status };
+      const errorData = await response.json();
+      return {
+        status: response.status,
+        message: "Validation errors occurred.",
+        errors: errorData, // Return the error messages
+      };
     }
   } catch (err) {
     console.error(err);
