@@ -32,6 +32,14 @@ const Cars = ({ user }) => {
     setCurrentSelectedCar(car);
   };
 
+  const updateCars = (updatedCar) => {
+    setData((prevData) => [
+      ...prevData.map((car) =>
+        car.id === updatedCar.id ? { ...car, ...updatedCar } : car
+      ),
+    ]);
+  };
+
   return (
     <Container className="height mt-1">
       <Row className="d-flex flex-column justify-content-center align-items-center mb-3">
@@ -39,6 +47,7 @@ const Cars = ({ user }) => {
           <CarEdit
             car={currentSelectedCar}
             hide={() => setShowEditCar(false)}
+            updateCars = {updateCars}
           />
         ) : (
           <>

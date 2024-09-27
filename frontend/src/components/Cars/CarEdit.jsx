@@ -9,9 +9,11 @@ import {
 } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import styles from "./cars.module.css";
+import { EditCar } from "../../services/api";
 
-export default function CarEdit({ car, hide }) {
+export default function CarEdit({ car, hide, updateCars }) {
   const [show, setShow] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   const [formData, setFormData] = useState({
     mileage: car.mileage,
     picture: car.picture,
@@ -25,6 +27,21 @@ export default function CarEdit({ car, hide }) {
       [name]: value,
     }));
   };
+
+  const SubmitHandler = async () => {
+    setShow(true);
+    try {
+      const response = await EditCar(formData, car.id);
+      if (response.status === 200) {
+        setModalContent("Car edited successfully");
+        updateCars(response.data);
+      } else {
+        setModalContent("Error occured try again later");
+      }
+    } catch (err) {
+      setModalContent("Error occured try again later");
+    }
+  };
   return (
     <>
       <Container className={`height mt-1`}>
@@ -33,14 +50,17 @@ export default function CarEdit({ car, hide }) {
             {show ? (
               <Modal
                 show={show}
-                onHide={() => setShow(false)}
+                onHide={() => {
+                  setShow(false);
+                  hide();
+                }}
                 backdrop={true}
                 keyboard={true}
               >
                 <Modal.Header closeButton>
                   <Modal.Title>Adding Car</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>asd</Modal.Body>
+                <Modal.Body>{modalContent}</Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={() => setShow(true)}>
                     Close
@@ -92,7 +112,7 @@ export default function CarEdit({ car, hide }) {
                   <div className="text-center"></div>
                 </Card.Body>
                 <div className="d-flex justify-content-end gap-2">
-                  <Button className="">Save changes</Button>
+                  <Button onClick={SubmitHandler}>Save changes</Button>
                   <Button variant="danger" className="" onClick={hide}>
                     Cancel
                   </Button>
