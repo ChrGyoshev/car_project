@@ -29,32 +29,41 @@ export default function CarEdit({ car, hide, updateCars }) {
     }));
   };
 
-  const handleUploadComplete = (uploadedPictureUrl) => {
-    // If no new picture is uploaded
-    if (!uploadedPictureUrl) {
-      uploadedPictureUrl = car.picture; // Retain the existing picture
-
-      setShow(true);
-    }
-
-    const updatedFormData = { ...formData, picture: uploadedPictureUrl };
+  const handleUploadComplete = (uploadedPictureFile) => {
+    // If no new picture is uploaded, retain the existing picture
+    const updatedFormData = {
+      ...formData,
+      picture: uploadedPictureFile || car.picture,
+    };
     submitCarData(updatedFormData);
   };
 
   const submitCarData = async (updatedFormData) => {
     setShow(true);
     try {
-      const response = await EditCar(updatedFormData, car.id);
+      // Create a FormData object to handle the file upload
+      const formDataToSubmit = new FormData();
+      formDataToSubmit.append("mileage", updatedFormData.mileage);
+      formDataToSubmit.append("year", updatedFormData.year);
+
+      // Only append the picture file if it exists
+      if (updatedFormData.picture && updatedFormData.picture instanceof File) {
+        formDataToSubmit.append("picture", updatedFormData.picture);
+      }
+
+      // Send the form data to the API
+      const response = await EditCar(formDataToSubmit, car.id);
       if (response.status === 200) {
         setModalContent("Car edited successfully");
         updateCars(response.data);
       } else {
-        setModalContent("Error occured try again later!");
+        setModalContent("Error occurred. Try again later!");
       }
     } catch (err) {
-      setModalContent("Error occured try again later");
+      setModalContent("Error occurred. Try again later");
     }
 
+    // Reset the form data after submission
     setFormData({ make: "", model: "", year: "", mileage: 0, picture: "" });
   };
 
@@ -74,7 +83,7 @@ export default function CarEdit({ car, hide, updateCars }) {
                 keyboard={true}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Adding Car</Modal.Title>
+                  <Modal.Title>Editing Car</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{modalContent}</Modal.Body>
                 <Modal.Footer>
@@ -94,54 +103,38 @@ export default function CarEdit({ car, hide, updateCars }) {
                 className={`shadow-lg p-4 mx-auto ${styles.responsiveCard}`}
               >
                 <Card.Body>
-                  <form>
+                  <Form>
                     <Form.Group className="mb-4 w-100">
                       <Form.Label className="fw-bold">
                         Change mileage
                       </Form.Label>
                       <Form.Control
                         name="mileage"
-                        id="mileage"
                         value={formData.mileage}
                         onChange={ChangeHandler}
-                      ></Form.Control>
-                    </Form.Group>
-
-                    <Form.Group className="mb-4 w-100">
-                      <Form.Label className="fw-bold">
-                        Change picture
-                      </Form.Label>
-                      <Form.Control
-                        name="picture"
-                        id="picture"
-                        value={formData.picture}
-                        placeholder="change picture"
-                        onChange={ChangeHandler}
-                      ></Form.Control>
+                      />
                     </Form.Group>
 
                     <Form.Group className="mb-4 w-100">
                       <Form.Label className="fw-bold">Change year</Form.Label>
                       <Form.Control
                         name="year"
-                        id="year"
                         value={formData.year}
-                        placeholder="change year"
                         onChange={ChangeHandler}
-                      ></Form.Control>
+                      />
                     </Form.Group>
-                  </form>
-                  <PictureUpload
-                    onUploadComplete={handleUploadComplete}
-                    car={car}
-                  />
-                  <div className="text-center"></div>
+
+                    <PictureUpload
+                      onUploadComplete={handleUploadComplete}
+                      car={car}
+                    />
+                  </Form>
+                  <div className="d-flex justify-content-end gap-2">
+                    <Button variant="danger" onClick={hide}>
+                      Cancel
+                    </Button>
+                  </div>
                 </Card.Body>
-                <div className="d-flex justify-content-end gap-2">
-                  <Button variant="danger" className="" onClick={hide}>
-                    Cancel
-                  </Button>
-                </div>
               </Card>
             )}
           </Col>

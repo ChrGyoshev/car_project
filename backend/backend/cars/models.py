@@ -17,7 +17,7 @@ class Car(models.Model):
     make = models.CharField(max_length=500)
     model = models.CharField(max_length=500)
     year = models.IntegerField(validators=[validate_year])
-    picture = models.URLField(blank=True, null=True)
+    picture = models.ImageField( upload_to="images/", blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cars')
     mileage = models.PositiveIntegerField(blank=True, null=True)
 

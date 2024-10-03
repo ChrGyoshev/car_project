@@ -47,7 +47,7 @@ const Cars = ({ user }) => {
           <CarEdit
             car={currentSelectedCar}
             hide={() => setShowEditCar(false)}
-            updateCars = {updateCars}
+            updateCars={updateCars}
           />
         ) : (
           <>
@@ -62,8 +62,9 @@ const Cars = ({ user }) => {
                   <Card.Img
                     variant="top"
                     src={
-                      car.picture ||
-                      "https://via.placeholder.com/400x300.png?text=No+Image"
+                      car.picture === null
+                        ? "https://via.placeholder.com/400x300.png?text=No+Image"
+                        : `http://localhost:8000//${car.picture}`
                     }
                     alt={`${car.make} ${car.model}`}
                   />

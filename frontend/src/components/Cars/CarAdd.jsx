@@ -11,7 +11,7 @@ const CarAdd = () => {
     model: "",
     year: "",
     mileage: 0,
-    picture: "",
+    picture: null,
   });
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState("");
@@ -79,8 +79,8 @@ const CarAdd = () => {
 
   //  Upload picture logic here:
 
-  const handleUploadComplete = (uploadedPictureUrl) => {
-    const updatedFormData = { ...formData, picture: uploadedPictureUrl };
+  const handleUploadComplete = (uploadedPictureFile) => {
+    const updatedFormData = { ...formData, picture: uploadedPictureFile };
     submitCarData(updatedFormData);
   };
 
@@ -91,7 +91,7 @@ const CarAdd = () => {
     }
     setShow(true);
     setResponseMsg("Car created successfully");
-    setFormData({ make: "", model: "", year: "", mileage: 0, picture: "" });
+    setFormData({ make: "", model: "", year: "", mileage: 0, picture: null });
   };
 
   return (

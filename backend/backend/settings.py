@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'backend.users',
     'backend.cars',
     'backend.maintenance',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+MEDIA_URL = '/media/'  # URL to access media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
