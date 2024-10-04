@@ -4,6 +4,7 @@ import { EditUser } from "../../services/api.jsx";
 import { useState } from "react";
 import SpinnerBorder from "../../services/spinner.jsx";
 import { DeleteUser } from "../../services/api.jsx";
+import ProfilePictureUpload from "./ProfilePictureUpload.jsx";
 
 const EditProfileModal = ({
   showModal,
@@ -13,7 +14,10 @@ const EditProfileModal = ({
   formData,
   logOff,
   handleShowModal,
+  setFormData,
+  profile_picture,
 }) => {
+  const [profilePicture, setProfilePicture] = useState(null);
   const [error, setError] = useState("");
   const [errorModal, setErrorModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,14 +26,30 @@ const EditProfileModal = ({
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false); // New state for delete confirmation modal
   const navigate = useNavigate();
 
+  const handleFileUpload = (file) => {
+    setProfilePicture(file); // Set profile picture in state
+  };
+
   const Submitting = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    const formDataToSend = new FormData();
+
+    formDataToSend.append("username", formData.username);
+    formDataToSend.append("email", formData.email);
+
+    formDataToSend.append("profile_picture", formData.profile_picture); // Only append if file exists
+
     try {
-      const response = await EditUser(formData);
+      const response = await EditUser(formDataToSend);
 
       if (response && response.status == 200) {
+        setFormData((prevData) => ({
+          ...prevData,
+          profile_picture: profilePicture,
+        }));
+
         SubmitHandler();
       } else {
         setError("API ERROR EDIT PROFILE");
@@ -114,7 +134,7 @@ const EditProfileModal = ({
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicPicture">
+              {/* <Form.Group className="mb-3" controlId="formBasicPicture">
                 <Form.Label className="text-center">
                   Profile picture URL
                 </Form.Label>
@@ -126,7 +146,8 @@ const EditProfileModal = ({
                   autoComplete="profile_picture"
                   value={formData.profile_picture || ""}
                 />
-              </Form.Group>
+              </Form.Group> */}
+              <ProfilePictureUpload onUploadComplete={changeHandler} />
             </Form>
           )}
         </Modal.Body>

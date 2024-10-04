@@ -99,10 +99,9 @@ export async function EditUser(formData) {
     const response = await fetch(UserEditURL, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         ...(jwt && { Authorization: `Bearer ${jwt}` }),
       },
-      body: JSON.stringify(formData),
+      body: formData,
       credentials: "include",
     });
     if (response.ok) {

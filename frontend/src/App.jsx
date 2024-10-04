@@ -14,6 +14,7 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
 
   const [user, setUser] = useState("");
+  const [picture, setPicture] = useState("");
 
   useEffect(() => {
     async function fetchUser() {
@@ -28,6 +29,7 @@ function App() {
     setUser((prevUser) => ({
       ...prevUser,
       ...updatedUser,
+      profile_picture: updatedUser.profile_picture || prevUser.profile_picture,
     }));
   };
 
@@ -52,6 +54,8 @@ function App() {
                 user={user}
                 onUpdateUser={handleUpdateUser}
                 logOff={() => setIsLogged(false)}
+                setPicture={setPicture}
+                picture={picture}
               />
             }
           />

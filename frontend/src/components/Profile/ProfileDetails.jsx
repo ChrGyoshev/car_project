@@ -8,13 +8,19 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 
-const ProfileDetails = ({ user, onUpdateUser, logOff }) => {
+const ProfileDetails = ({
+  user,
+  onUpdateUser,
+  logOff,
+  picture,
+  setPicture,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
   const [error, setError] = useState("Hardcoded error message");
-
+  const [profilePicture, setProfilePicture] = useState(user.profile_picture);
   const [formData, setFormData] = useState([]);
 
   useEffect(() => {
@@ -28,17 +34,31 @@ const ProfileDetails = ({ user, onUpdateUser, logOff }) => {
   const SubmitHandler = () => {
     onUpdateUser(formData);
 
-    console.log(formData);
+    // console.log(formData);
 
     handleCloseModal();
   };
 
   const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, type, value, files } = e.target;
+
+    if (type === "file") {
+      const selectedFile = files[0];
+      if (selectedFile) {
+        setProfilePicture(selectedFile);
+        const url = URL.createObjectURL(selectedFile);
+        setPicture(url);
+      }
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: selectedFile,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value, // Update the value as before
+      }));
+    }
   };
 
   return (
@@ -50,7 +70,9 @@ const ProfileDetails = ({ user, onUpdateUser, logOff }) => {
               <Card.Body>
                 <div className={styles.profileFrame}>
                   <img
-                    src={user.profile_picture || ProfileDefault}
+                    src={
+                      picture || `http://localhost:8000${user.profile_picture}`
+                    }
                     alt="User Profile Picture"
                     className="img-fluid mb-3"
                     style={{ maxWidth: "150px", borderRadius: "50%" }}
@@ -92,7 +114,9 @@ const ProfileDetails = ({ user, onUpdateUser, logOff }) => {
         changeHandler={changeHandler}
         SubmitHandler={SubmitHandler}
         formData={formData}
+        setFormData={setFormData}
         logOff={logOff}
+        profile_picture = {profilePicture}
       />
 
       <Modal show="" onHide={handleCloseModal} centered>

@@ -64,7 +64,7 @@ const Cars = ({ user }) => {
                     src={
                       car.picture === null
                         ? "https://via.placeholder.com/400x300.png?text=No+Image"
-                        : `http://localhost:8000//${car.picture}`
+                        : `https://car-project-1-v5k4.onrender.com${car.picture}`
                     }
                     alt={`${car.make} ${car.model}`}
                   />
