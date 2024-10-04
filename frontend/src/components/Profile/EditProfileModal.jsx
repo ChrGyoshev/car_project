@@ -38,8 +38,10 @@ const EditProfileModal = ({
 
     formDataToSend.append("username", formData.username);
     formDataToSend.append("email", formData.email);
-
-    formDataToSend.append("profile_picture", formData.profile_picture); // Only append if file exists
+    if (typeof formData.profile_picture === "object") {
+      console.log(typeof formData.profile_picture);
+      formDataToSend.append("profile_picture", formData.profile_picture);
+    }
 
     try {
       const response = await EditUser(formDataToSend);

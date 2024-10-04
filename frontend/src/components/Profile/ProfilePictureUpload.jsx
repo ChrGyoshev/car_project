@@ -5,7 +5,12 @@ const ProfilePictureUpload = ({ onUploadComplete }) => {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
-    onUploadComplete(e); // Pass the selected file to the parent component
+    const file = e.target.files[0]; // Get the selected file
+    if (file) {
+      onUploadComplete(e); // Pass the selected file to the parent component
+    } else {
+      onUploadComplete(null);
+    }
   };
   return (
     <>
