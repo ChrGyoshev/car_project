@@ -38,8 +38,7 @@ const EditProfileModal = ({
 
     formDataToSend.append("username", formData.username);
     formDataToSend.append("email", formData.email);
-    if (typeof formData.profile_picture === "object") {
-      console.log(typeof formData.profile_picture);
+    if (formData.profile_picture instanceof File) {
       formDataToSend.append("profile_picture", formData.profile_picture);
     }
 

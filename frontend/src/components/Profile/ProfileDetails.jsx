@@ -71,7 +71,10 @@ const ProfileDetails = ({
                 <div className={styles.profileFrame}>
                   <img
                     src={
-                      picture || `http://localhost:8000${user.profile_picture}`
+                      picture ||
+                      (user.profile_picture
+                        ? `http://localhost:8000${user.profile_picture}`
+                        : ProfileDefault)
                     }
                     alt="User Profile Picture"
                     className="img-fluid mb-3"
@@ -116,7 +119,7 @@ const ProfileDetails = ({
         formData={formData}
         setFormData={setFormData}
         logOff={logOff}
-        profile_picture = {profilePicture}
+        profile_picture={profilePicture}
       />
 
       <Modal show="" onHide={handleCloseModal} centered>
