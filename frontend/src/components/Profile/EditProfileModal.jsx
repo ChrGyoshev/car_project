@@ -129,7 +129,7 @@ const EditProfileModal = ({
                   type="text"
                   name="username"
                   placeholder="Username"
-                  value={formData.username}
+                  value={formData.username ? formData.username : ""}
                   onChange={changeHandler}
                   autoComplete="username"
                 />

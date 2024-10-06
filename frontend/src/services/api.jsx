@@ -1,24 +1,24 @@
-// const RegisterURL = "https://car-project-1-v5k4.onrender.com/api/register"; // use localhost if not using docker-compose
-// const LoginURL = "https://car-project-1-v5k4.onrender.com/api/login";
-// const LogOutURL = "https://car-project-1-v5k4.onrender.com/api/logout";
-// const LoggedUserURL = "https://car-project-1-v5k4.onrender.com/api/user";
-// const UserEditURL = "https://car-project-1-v5k4.onrender.com/api/edit";
-// const DeleteProfileURL = "https://car-project-1-v5k4.onrender.com/api/delete";
+const RegisterURL = "https://car-project-1-v5k4.onrender.com/api/register"; // use localhost if not using docker-compose
+const LoginURL = "https://car-project-1-v5k4.onrender.com/api/login";
+const LogOutURL = "https://car-project-1-v5k4.onrender.com/api/logout";
+const LoggedUserURL = "https://car-project-1-v5k4.onrender.com/api/user";
+const UserEditURL = "https://car-project-1-v5k4.onrender.com/api/edit";
+const DeleteProfileURL = "https://car-project-1-v5k4.onrender.com/api/delete";
 
-// const GetUserCarsURL = "https://car-project-1-v5k4.onrender.com/api/cars/list";
-// const AddCarURL = "https://car-project-1-v5k4.onrender.com/api/cars/create";
-// const EditCarURL = `https://car-project-1-v5k4.onrender.com/api/cars/edit/`;
+const GetUserCarsURL = "https://car-project-1-v5k4.onrender.com/api/cars/list";
+const AddCarURL = "https://car-project-1-v5k4.onrender.com/api/cars/create";
+const EditCarURL = `https://car-project-1-v5k4.onrender.com/api/cars/edit/`;
 
-const RegisterURL = "http://127.0.01:8000/api/register"; // use localhost if not using docker-compose
-const LoginURL = "http://127.0.0.1:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
-const LogOutURL = "http://127.0.0.1:8000/api/logout";
-const LoggedUserURL = "http://127.0.0.1:8000/api/user";
-const UserEditURL = "http://127.0.0.1:8000/api/edit";
-const DeleteProfileURL = "http://127.0.0.1:8000/api/delete";
+// const RegisterURL = "http://127.0.01:8000/api/register"; // use localhost if not using docker-compose
+// const LoginURL = "http://127.0.0.1:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
+// const LogOutURL = "http://127.0.0.1:8000/api/logout";
+// const LoggedUserURL = "http://127.0.0.1:8000/api/user";
+// const UserEditURL = "http://127.0.0.1:8000/api/edit";
+// const DeleteProfileURL = "http://127.0.0.1:8000/api/delete";
 
-const GetUserCarsURL = "http://127.0.0.1:8000/api/cars/list";
-const AddCarURL = "http://127.0.0.1:8000/api/cars/create";
-const EditCarURL = `http://127.0.0.1:8000/api/cars/edit/`;
+// const GetUserCarsURL = "http://127.0.0.1:8000/api/cars/list";
+// const AddCarURL = "http://127.0.0.1:8000/api/cars/create";
+// const EditCarURL = `http://127.0.0.1:8000/api/cars/edit/`;
 
 export async function registerUser(data) {
   try {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-const PictureUpload = ({ onUploadComplete }) => {
+const PictureUpload = ({ onUploadComplete, hide }) => {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -19,8 +19,13 @@ const PictureUpload = ({ onUploadComplete }) => {
       <Form.Group className="mb-4 w-100">
         <Form.Label className="fw-bold">Picture</Form.Label>
         <Form.Control type="file" onChange={handleFileChange} />
-        <div className="text-center mt-3">
-          <Button onClick={handleUpload}>Submit</Button>
+        <div className="text-center mt-3 ">
+          <Button className="m-1" onClick={handleUpload}>
+            Submit
+          </Button>
+          <Button variant="danger" onClick={hide}>
+            Cancel
+          </Button>
         </div>
       </Form.Group>
     </>

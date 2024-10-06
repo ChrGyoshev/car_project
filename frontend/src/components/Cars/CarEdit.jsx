@@ -127,13 +127,9 @@ export default function CarEdit({ car, hide, updateCars }) {
                     <PictureUpload
                       onUploadComplete={handleUploadComplete}
                       car={car}
+                      hide={hide}
                     />
                   </Form>
-                  <div className="d-flex justify-content-end gap-2">
-                    <Button variant="danger" onClick={hide}>
-                      Cancel
-                    </Button>
-                  </div>
                 </Card.Body>
               </Card>
             )}

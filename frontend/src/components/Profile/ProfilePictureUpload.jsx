@@ -20,6 +20,7 @@ const ProfilePictureUpload = ({ onUploadComplete }) => {
           type="file"
           name="profile_picture"
           onChange={handleFileChange}
+          value={undefined}
         />
       </Form.Group>
     </>

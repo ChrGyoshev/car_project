@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
 import styles from "./profiledetais.module.css";
 import ProfileDefault from "../../assets/profile-default.png";
 import { useState, useEffect } from "react";
-
+import SpinnerBorder from "../../services/spinner";
 import { Link } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 
@@ -22,6 +22,7 @@ const ProfileDetails = ({
   const [error, setError] = useState("Hardcoded error message");
   const [profilePicture, setProfilePicture] = useState(user.profile_picture);
   const [formData, setFormData] = useState([]);
+  const [loadingImage, setLoadingImage] = useState(true);
 
   useEffect(() => {
     setFormData({
@@ -29,12 +30,16 @@ const ProfileDetails = ({
       email: user.email,
       profile_picture: user.profile_picture,
     });
+
+    if (user.profile_picture) {
+      setTimeout(() => {
+        setLoadingImage(false);
+      }, 100);
+    }
   }, [user]);
 
   const SubmitHandler = () => {
     onUpdateUser(formData);
-
-    // console.log(formData);
 
     handleCloseModal();
   };
@@ -69,17 +74,27 @@ const ProfileDetails = ({
             <Card className="text-center p-4 p-md-5 shadow-lg">
               <Card.Body>
                 <div className={styles.profileFrame}>
-                  <img
-                    src={
-                      picture ||
-                      (user.profile_picture
-                        ? `http://localhost:8000${user.profile_picture}`
-                        : ProfileDefault)
-                    }
-                    alt="User Profile Picture"
-                    className="img-fluid mb-3"
-                    style={{ maxWidth: "150px", borderRadius: "50%" }}
-                  />
+                  {loadingImage ? (
+                    <SpinnerBorder />
+                  ) : (
+                    <img
+                      key={profilePicture}
+                      src={
+                        picture ||
+                        (user.profile_picture
+                          ? `https://car-project-1-v5k4.onrender.com${user.profile_picture}`
+                          : ProfileDefault)
+                      }
+                      alt="User Profile Picture"
+                      className="img-fluid mb-3"
+                      style={{
+                        maxWidth: "150px",
+                        borderRadius: "50%",
+                        display: loadingImage ? "none" : "block",
+                      }}
+                      onLoad={() => setLoadingImage(false)} // Stop loading when the image is fully loaded
+                    />
+                  )}
                 </div>
 
                 {/* Profile details section */}
