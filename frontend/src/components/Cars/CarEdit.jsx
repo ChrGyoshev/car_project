@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import styles from "./cars.module.css";
 import { EditCar } from "../../services/api";
 import PictureUpload from "./CarPictureUpload";
+import SpinnerBorder from "../../services/spinner";
 
 export default function CarEdit({ car, hide, updateCars }) {
   const [show, setShow] = useState(false);
@@ -20,6 +21,8 @@ export default function CarEdit({ car, hide, updateCars }) {
     picture: car.picture,
     year: car.year,
   });
+
+  const [loading, setLoading] = useState(false);
 
   const ChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -40,6 +43,7 @@ export default function CarEdit({ car, hide, updateCars }) {
 
   const submitCarData = async (updatedFormData) => {
     setShow(true);
+    setLoading(true);
     try {
       // Create a FormData object to handle the file upload
       const formDataToSubmit = new FormData();
@@ -63,6 +67,8 @@ export default function CarEdit({ car, hide, updateCars }) {
       setModalContent("Error occurred. Try again later");
     }
 
+    setLoading(false);
+
     // Reset the form data after submission
     setFormData({ make: "", model: "", year: "", mileage: 0, picture: "" });
   };
@@ -85,7 +91,9 @@ export default function CarEdit({ car, hide, updateCars }) {
                 <Modal.Header closeButton>
                   <Modal.Title>Editing Car</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{modalContent}</Modal.Body>
+                <Modal.Body>
+                  <>{loading ? <SpinnerBorder /> : modalContent}</>
+                </Modal.Body>
                 <Modal.Footer>
                   <Button
                     variant="secondary"

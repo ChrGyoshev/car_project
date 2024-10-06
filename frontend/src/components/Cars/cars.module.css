@@ -24,3 +24,11 @@
 .EditIcon:hover {
     cursor: pointer;
 }
+
+.CarImage {
+   width: 100%;
+   height: 350px;
+   
+}
+
+

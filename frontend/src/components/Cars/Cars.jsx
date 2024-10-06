@@ -82,6 +82,7 @@ const Cars = ({ user }) => {
                       )}
 
                       <Card.Img
+                        className={styles.CarImage}
                         variant="top"
                         src={
                           car.picture === null

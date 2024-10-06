@@ -20,7 +20,7 @@ const PictureUpload = ({ onUploadComplete, hide, location }) => {
       <Form.Group className="mb-4 w-100">
         <Form.Label className="fw-bold">Picture</Form.Label>
         <Form.Control type="file" onChange={handleFileChange} />
-        <div className="text-center mt-3 ">
+        <div className=" d-flex gap-2 justify-content-center mt-3  ">
           <Button className="m-" onClick={handleUpload}>
             Submit
           </Button>
