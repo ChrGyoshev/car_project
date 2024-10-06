@@ -51,6 +51,7 @@ const ProfileDetails = ({
         setProfilePicture(selectedFile);
         const url = URL.createObjectURL(selectedFile);
         setPicture(url);
+        setProfilePicture(url);
       }
       setFormData((prevData) => ({
         ...prevData,
@@ -76,16 +77,18 @@ const ProfileDetails = ({
                   <img
                     key={profilePicture}
                     src={
-                      picture ||
-                      (user.profile_picture
-                        ? `https://car-project-1-v5k4.onrender.com${user.profile_picture}`
-                        : ProfileDefault)
+                      picture
+                        ? picture
+                        : `https://car-project-1-v5k4.onrender.com${user.profile_picture}`
+
+                      // picture ||
+                      // (user.profile_picture
+                      //   ? `https://car-project-1-v5k4.onrender.com${user.profile_picture}`
+                      //   : ProfileDefault)
                     }
                     alt="User Profile Picture"
                     className="img-fluid mb-3"
                     style={{
-                      maxWidth: "150px",
-                      borderRadius: "50%",
                       display: loadingImage ? "none" : "block",
                     }}
                     onLoad={() => {
