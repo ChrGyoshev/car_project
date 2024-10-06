@@ -76,7 +76,7 @@ const Cars = ({ user }) => {
                     <Card className={`shadow mx-auto ${styles.responsiveCard}`}>
                       {/* Show spinner while the image is loading */}
                       {!imageLoaded[car.id] && (
-                        <div className="mt-4">
+                        <div className="mt-">
                           <SpinnerBorder />
                         </div>
                       )}

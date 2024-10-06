@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const PictureUpload = ({ onUploadComplete, hide }) => {
+const PictureUpload = ({ onUploadComplete, hide, location }) => {
   const [file, setFile] = useState(null);
-
+  const navigate = useNavigate();
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -20,12 +21,18 @@ const PictureUpload = ({ onUploadComplete, hide }) => {
         <Form.Label className="fw-bold">Picture</Form.Label>
         <Form.Control type="file" onChange={handleFileChange} />
         <div className="text-center mt-3 ">
-          <Button className="m-1" onClick={handleUpload}>
+          <Button className="m-" onClick={handleUpload}>
             Submit
           </Button>
-          <Button variant="danger" onClick={hide}>
-            Cancel
-          </Button>
+          {location ? (
+            <Button variant="danger" onClick={() => navigate(-1)}>
+              Cancel
+            </Button>
+          ) : (
+            <Button variant="danger" onClick={hide}>
+              Cancel
+            </Button>
+          )}
         </div>
       </Form.Group>
     </>

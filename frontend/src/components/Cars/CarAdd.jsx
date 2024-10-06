@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import styles from "./cars.module.css";
 import { AddCar } from "../../services/api";
 import PictureUpload from "./CarPictureUpload";
+import SpinnerBorder from "../../services/spinner";
 
 const CarAdd = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ const CarAdd = () => {
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedMake, setSelectedMake] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [responseMsg, setResponseMsg] = useState("");
 
@@ -85,13 +86,31 @@ const CarAdd = () => {
   };
 
   const submitCarData = async (updatedFormData) => {
-    const response = await AddCar(updatedFormData);
-    if (response.errors) {
-      console.log(response.errors);
-    }
     setShow(true);
-    setResponseMsg("Car created successfully");
-    setFormData({ make: "", model: "", year: "", mileage: 0, picture: null });
+    setLoading(true);
+
+    try {
+      const response = await AddCar(updatedFormData);
+      if (response.errors) {
+        console.log(response.errors);
+        setResponseMsg("Error occurred while adding the car.");
+      } else {
+        setResponseMsg("Car created successfully");
+        // Reset the form data if the car is added successfully
+        setFormData({
+          make: "",
+          model: "",
+          year: "",
+          mileage: 0,
+          picture: null,
+        });
+      }
+    } catch (error) {
+      console.log("Error submitting car data:", error);
+      setResponseMsg("An error occurred while adding the car.");
+    } finally {
+      setLoading(false); // Set loading state back to false
+    }
   };
 
   return (
@@ -109,7 +128,10 @@ const CarAdd = () => {
                 <Modal.Header closeButton>
                   <Modal.Title>Adding Car</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{responseMsg}</Modal.Body>
+
+                <Modal.Body>
+                  {loading ? <SpinnerBorder /> : responseMsg}
+                </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={() => setShow(false)}>
                     Close
@@ -199,7 +221,10 @@ const CarAdd = () => {
                       ></Form.Control>
                     </Form.Group> */}
 
-                    <PictureUpload onUploadComplete={handleUploadComplete} />
+                    <PictureUpload
+                      onUploadComplete={handleUploadComplete}
+                      location={true}
+                    />
                   </form>
                 </Card.Body>
               </Card>

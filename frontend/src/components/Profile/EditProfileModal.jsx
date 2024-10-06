@@ -36,7 +36,12 @@ const EditProfileModal = ({
 
     const formDataToSend = new FormData();
 
-    formDataToSend.append("username", formData.username);
+    if (formData.username && formData.username.trim() !== "") {
+      formDataToSend.append("username", formData.username);
+    } else {
+      formDataToSend.append("username", "");
+    }
+
     formDataToSend.append("email", formData.email);
     if (formData.profile_picture instanceof File) {
       formDataToSend.append("profile_picture", formData.profile_picture);
@@ -129,7 +134,7 @@ const EditProfileModal = ({
                   type="text"
                   name="username"
                   placeholder="Username"
-                  value={formData.username ? formData.username : ""}
+                  value={formData.username}
                   onChange={changeHandler}
                   autoComplete="username"
                 />

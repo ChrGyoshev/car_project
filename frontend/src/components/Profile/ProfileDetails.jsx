@@ -31,11 +31,9 @@ const ProfileDetails = ({
       profile_picture: user.profile_picture,
     });
 
-    if (user.profile_picture) {
-      setTimeout(() => {
-        setLoadingImage(false);
-      }, 100);
-    }
+    // setTimeout(() => {
+    //   setLoadingImage(false);
+    // }, 100);
   }, [user]);
 
   const SubmitHandler = () => {
@@ -74,32 +72,34 @@ const ProfileDetails = ({
             <Card className="text-center p-4 p-md-5 shadow-lg">
               <Card.Body>
                 <div className={styles.profileFrame}>
-                  {loadingImage ? (
-                    <SpinnerBorder />
-                  ) : (
-                    <img
-                      key={profilePicture}
-                      src={
-                        picture ||
-                        (user.profile_picture
-                          ? `https://car-project-1-v5k4.onrender.com${user.profile_picture}`
-                          : ProfileDefault)
-                      }
-                      alt="User Profile Picture"
-                      className="img-fluid mb-3"
-                      style={{
-                        maxWidth: "150px",
-                        borderRadius: "50%",
-                        display: loadingImage ? "none" : "block",
-                      }}
-                      onLoad={() => setLoadingImage(false)} // Stop loading when the image is fully loaded
-                    />
-                  )}
+                  {loadingImage && <SpinnerBorder />}
+                  <img
+                    key={profilePicture}
+                    src={
+                      picture ||
+                      (user.profile_picture
+                        ? `https://car-project-1-v5k4.onrender.com${user.profile_picture}`
+                        : ProfileDefault)
+                    }
+                    alt="User Profile Picture"
+                    className="img-fluid mb-3"
+                    style={{
+                      maxWidth: "150px",
+                      borderRadius: "50%",
+                      display: loadingImage ? "none" : "block",
+                    }}
+                    onLoad={() => {
+                      setLoadingImage(false), console.log("done");
+                    }}
+                  />
                 </div>
 
                 {/* Profile details section */}
 
-                <div className={styles.profileDetails}>
+                <div
+                  className={`styles.profileDetails`}
+                  style={{ display: loadingImage ? "none" : "block" }}
+                >
                   {user.username ? (
                     <div className={styles.profileBox}>
                       <p className={styles.profileLabel}>Username</p>
