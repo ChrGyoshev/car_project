@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import SpinnerBorder from "../../services/spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import CarEdit from "./CarEdit";
 
 const Cars = ({ user }) => {
@@ -76,7 +77,7 @@ const Cars = ({ user }) => {
                     <Card className={`shadow mx-auto ${styles.responsiveCard}`}>
                       {/* Show spinner while the image is loading */}
                       {!imageLoaded[car.id] && (
-                        <div className="mt-">
+                        <div className="mt-4">
                           <SpinnerBorder />
                         </div>
                       )}
@@ -101,6 +102,11 @@ const Cars = ({ user }) => {
                           icon={faPenToSquare}
                           className={styles.EditIcon}
                           onClick={() => EditHandler(car)}
+                        />
+
+                        <FontAwesomeIcon
+                          icon={faTrashCan}
+                          className={styles.DeleteIcon}
                         />
                         <Card.Title className="fst-italic">
                           {car.make} {car.model}
