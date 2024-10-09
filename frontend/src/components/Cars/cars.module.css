@@ -9,33 +9,37 @@
     .responsiveCard {
         width: 80%;
     }
+
+    
+   
 }
+
+
 
 
 .EditIcon {
    position: absolute;
-   right: 1%;
+   right: 8%;
    top: 3%;
-    
+   padding-right: 1rem;
+
     
    font-size: 1.5rem;
 }
 
-.EditIcon:hover {
+.EditIcon:hover, .DeleteIcon:hover  {
     cursor: pointer;
 }
 
-/* .CarImage {
-   width: 100%;
-   height: 350px;
-   
-} */
+
 
 
 
 .DeleteIcon {
     position: absolute;
-    right: 10%;
+    right: 2%;
     top: 3%;
     font-size: 1.5rem;
+    color: darkred;
 }
+

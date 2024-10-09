@@ -8,11 +8,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import CarEdit from "./CarEdit";
+import CarDelete from "./CarDelete";
+import DeleteCar from "./CarDelete";
 
 const Cars = ({ user }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [showEditCar, setShowEditCar] = useState(false);
+  const [showDeleteCar, setShowDeleteCar] = useState(false);
   const [currentSelectedCar, setCurrentSelectedCar] = useState();
   const [loading, setLoading] = useState(false);
   const [imageLoaded, setImageLoaded] = useState({}); // Track image load status
@@ -37,12 +40,21 @@ const Cars = ({ user }) => {
     setCurrentSelectedCar(car);
   };
 
-  const updateCars = (updatedCar) => {
-    setData((prevData) => [
-      ...prevData.map((car) =>
-        car.id === updatedCar.id ? { ...car, ...updatedCar } : car
-      ),
-    ]);
+  const DeleteHandler = (car) => {
+    setShowDeleteCar(true);
+    setCurrentSelectedCar(car);
+  };
+
+  const updateCars = (updatedCar, isDeleted = false) => {
+    if (isDeleted) {
+      setData((prevData) => prevData.filter((car) => car.id !== updatedCar.id));
+    } else {
+      setData((prevData) =>
+        prevData.map((car) =>
+          car.id === updatedCar.id ? { ...car, ...updatedCar } : car
+        )
+      );
+    }
   };
 
   const handleImageLoad = (carId) => {
@@ -60,6 +72,12 @@ const Cars = ({ user }) => {
               <CarEdit
                 car={currentSelectedCar}
                 hide={() => setShowEditCar(false)}
+                updateCars={updateCars}
+              />
+            ) : showDeleteCar ? (
+              <DeleteCar
+                car={currentSelectedCar}
+                hide={() => setShowDeleteCar(false)}
                 updateCars={updateCars}
               />
             ) : (
@@ -107,6 +125,7 @@ const Cars = ({ user }) => {
                         <FontAwesomeIcon
                           icon={faTrashCan}
                           className={styles.DeleteIcon}
+                          onClick={() => DeleteHandler(car)}
                         />
                         <Card.Title className="fst-italic">
                           {car.make} {car.model}
