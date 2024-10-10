@@ -12,7 +12,7 @@ from mixins.mixin import CheckCarOwnerMixin, GetUserTokenMixin, MaintenanceMixin
 
 User= get_user_model()
 
-class CreateMaintenanceView(PermissionMixin,CheckCarOwnerMixin,GetUserTokenMixin,APIView):
+class CreateMaintenanceView(CheckCarOwnerMixin,GetUserTokenMixin,APIView):
     def post(self,request,*args,**kwargs):
         user_from_token = self.get_user_from_token(request)
         car_owned = self.check_owner(user_from_token)
@@ -24,7 +24,7 @@ class CreateMaintenanceView(PermissionMixin,CheckCarOwnerMixin,GetUserTokenMixin
         raise PermissionDenied("You do not have ownership of the car")
 
 
-class ListCarMaintenancesView(PermissionMixin,CheckCarOwnerMixin,GetUserTokenMixin,APIView):
+class ListCarMaintenancesView(CheckCarOwnerMixin,GetUserTokenMixin,APIView):
     def get(self,request,*args,**kwargs):
         user_from_token = self.get_user_from_token(request)
         car_owned = self.check_owner(user_from_token)

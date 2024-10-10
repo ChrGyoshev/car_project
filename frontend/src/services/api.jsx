@@ -10,6 +10,9 @@ const AddCarURL = "https://car-project-1-v5k4.onrender.com/api/cars/create";
 const EditCarURL = `https://car-project-1-v5k4.onrender.com/api/cars/edit/`;
 const DeleteCarURL = `https://car-project-1-v5k4.onrender.com/api/cars/delete/`;
 
+const GetAllMaintenancesURL =
+  "https://car-project-1-v5k4.onrender.com/api/cars/maintenance/list/";
+
 // const RegisterURL = "http://127.0.01:8000/api/register"; // use localhost if not using docker-compose
 // const LoginURL = "http://127.0.0.1:8000/api/login"; // for run -dev -- --host (to be able to make call from devices in the same network)
 // const LogOutURL = "http://127.0.0.1:8000/api/logout";
@@ -233,6 +236,30 @@ export async function DeleteCarAPI(pk) {
       },
       credentials: "include",
     });
+    if (response.ok) {
+      const data = await response.json();
+      return { data, status: response.status };
+    } else {
+      return { status: response.status };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//  Maintenances API calls
+
+export async function FetchAllMaintenances(pk) {
+  try {
+    const jwt = localStorage.getItem("jwt");
+    const response = await fetch(`${GetAllMaintenancesURL}${pk}`, {
+      method: "GET",
+      headers: {
+        ...(jwt && { Authorization: `Bearer ${jwt}` }),
+      },
+      credentials: "include",
+    });
+
     if (response.ok) {
       const data = await response.json();
       return { data, status: response.status };
