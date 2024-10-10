@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import CarEdit from "./CarEdit";
-import CarDelete from "./CarDelete";
+
 import DeleteCar from "./CarDelete";
 
 const Cars = ({ user }) => {
@@ -143,7 +143,9 @@ const Cars = ({ user }) => {
                         <div className="text-center">
                           <Button
                             variant="primary"
-                            onClick={() => console.log(car)}
+                            onClick={() =>
+                              navigate(`/cars/maintenances/${car.id}`)
+                            }
                           >
                             Maintenances
                           </Button>

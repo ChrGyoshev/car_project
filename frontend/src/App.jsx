@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import ProfileDetails from "./components/Profile/ProfileDetails";
 import Cars from "./components/Cars/Cars";
 import CarAdd from "./components/Cars/CarAdd";
+import Maintenaces from "./components/Maintenance/Maintenance";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -61,6 +62,7 @@ function App() {
           />
           <Route path="/cars" element={<Cars user={user} />} />
           <Route path="/cars/add" element={<CarAdd />} />
+          <Route path="/cars/maintenances/:id" element={<Maintenaces />} />
         </Routes>
       </BrowserRouter>
     </>
