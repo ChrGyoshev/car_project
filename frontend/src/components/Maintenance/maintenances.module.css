@@ -1,3 +1,47 @@
-.Test {
-    color: red;
+.maintenanceCard {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+  }
+  
+  .maintenanceCard .card-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  hr {
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+  
+  strong {
+    font-weight: 600;
+  }
+  
+  @media (min-width: 768px) {
+    .maintenanceCard {
+      max-width: 80%;
+      margin: auto;
+    }
+  }
+
+  .ButtonDiv {
+    display: flex;
+    justify-content: end;
+    gap: .5em;
+  }
+ 
+
+
+.maintenanceImage {
+  max-height: 150px;
+  border: 1px solid;
+  object-fit: contain;
+  border-radius: 10px 10px 0 0; /* Rounded corners on the top of the image */
 }
+  
