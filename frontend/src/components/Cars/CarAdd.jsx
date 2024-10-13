@@ -5,6 +5,7 @@ import styles from "./cars.module.css";
 import { AddCar } from "../../services/api";
 import PictureUpload from "./CarPictureUpload";
 import SpinnerBorder from "../../services/spinner";
+import { years, availableMakes } from "../../services/api";
 
 const CarAdd = () => {
   const [formData, setFormData] = useState({
@@ -21,15 +22,22 @@ const CarAdd = () => {
   const [show, setShow] = useState(false);
   const [responseMsg, setResponseMsg] = useState("");
 
-  const availableMakes = [
-    "Mitsubishi",
-    "Mercedes",
-    "Audi",
-    "BMW",
-    "Toyota",
-  ].sort();
-  // Makes array
-  const years = Array.from({ length: 2024 - 1960 + 1 }, (_, i) => 1960 + i);
+  // Group makes alphabetically
+  const groupMakesAlphabetically = (makes) => {
+    const grouped = {};
+
+    makes.forEach((make) => {
+      const firstLetter = make[0].toUpperCase(); // Get the first letter
+      if (!grouped[firstLetter]) {
+        grouped[firstLetter] = []; // Initialize the group if it doesn't exist
+      }
+      grouped[firstLetter].push(make); // Add the make to the group
+    });
+
+    return grouped;
+  };
+
+  const groupedMakes = groupMakesAlphabetically(availableMakes);
 
   // Fetch models based on the selected make
   useEffect(() => {
@@ -154,10 +162,14 @@ const CarAdd = () => {
                         className="form-select"
                       >
                         <option value="">--Please choose a make--</option>
-                        {availableMakes.map((make, index) => (
-                          <option key={index} value={make}>
-                            {make}
-                          </option>
+                        {Object.keys(groupedMakes).map((group, index) => (
+                          <optgroup key={index} label={group}>
+                            {groupedMakes[group].map((make, idx) => (
+                              <option key={idx} value={make}>
+                                {make}
+                              </option>
+                            ))}
+                          </optgroup>
                         ))}
                       </Form.Select>
                     </Form.Group>
@@ -210,16 +222,6 @@ const CarAdd = () => {
                         onChange={HandleChange}
                       ></Form.Control>
                     </Form.Group>
-
-                    {/* <Form.Group className="mb-4 w-100">
-                      <Form.Label className="fw-bold">Picture</Form.Label>
-                      <Form.Control
-                        name="picture"
-                        id="picture"
-                        value={formData.picture}
-                        onChange={HandleChange}
-                      ></Form.Control>
-                    </Form.Group> */}
 
                     <PictureUpload
                       onUploadComplete={handleUploadComplete}

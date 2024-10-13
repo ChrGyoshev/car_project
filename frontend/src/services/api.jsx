@@ -25,6 +25,54 @@ const GetAllMaintenancesURL =
 // const EditCarURL = `http://127.0.0.1:8000/api/cars/edit/`;
 // const DeleteCarURL = `https://127.0.0.1:8000/api/cars/`
 
+export const years = Array.from(
+  { length: 2024 - 1960 + 1 },
+  (_, i) => 1960 + i
+);
+
+export const availableMakes = [
+  "Acura",
+  "Bentley",
+  "Buick",
+  "Alfa Romeo",
+  "Cadillac",
+  "Chevrolet",
+  "Chrysler",
+  "Citroen",
+  "Daewoo",
+  "Dodge",
+  "Ferrari",
+  "Ford",
+  "Honda",
+  "Hyundai",
+  "Infiniti",
+  "Isuzu",
+  "Jeep",
+  "Jaguar",
+  "Kia",
+  "Lamborghini",
+  "Lancia",
+  "Land Rover",
+  "Lexus",
+  "Lincoln",
+  "Lotus",
+  "Maserati",
+  "Maybach",
+  "Mazda",
+  "Mg",
+  "Mini",
+  "Nissan",
+  "Mitsubishi",
+  "Mercedes",
+  "Opel",
+  "Peugeot",
+  "Pontiac",
+  "Porsche",
+  "Audi",
+  "BMW",
+  "Toyota",
+].sort();
+
 export async function registerUser(data) {
   try {
     const response = await fetch(RegisterURL, {

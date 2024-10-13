@@ -12,6 +12,7 @@ import styles from "./cars.module.css";
 import { EditCar } from "../../services/api";
 import PictureUpload from "./CarPictureUpload";
 import SpinnerBorder from "../../services/spinner";
+import { years } from "../../services/api";
 
 export default function CarEdit({ car, hide, updateCars }) {
   const [show, setShow] = useState(false);
@@ -124,12 +125,21 @@ export default function CarEdit({ car, hide, updateCars }) {
                     </Form.Group>
 
                     <Form.Group className="mb-4 w-100">
-                      <Form.Label className="fw-bold">Change year</Form.Label>
-                      <Form.Control
+                      <Form.Label className="fw-bold">Choose a Year</Form.Label>
+                      <Form.Select
+                        aria-label="Select year"
+                        id="year"
                         name="year"
                         value={formData.year}
                         onChange={ChangeHandler}
-                      />
+                      >
+                        <option value="">--Select year--</option>
+                        {years.map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </Form.Select>
                     </Form.Group>
 
                     <PictureUpload
