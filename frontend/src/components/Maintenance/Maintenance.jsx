@@ -40,7 +40,7 @@ export default function Maintenaces() {
                 />
                 <Card.Body>
                   <h5 className="card-title text-center">
-                    Maintenance #{maintenance.id}
+                    Value : {maintenance.id}
                   </h5>
                   <hr />
                   <Row className="mt-2">

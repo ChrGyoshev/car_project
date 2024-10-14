@@ -27,6 +27,7 @@
     .maintenanceCard {
       max-width: 80%;
       margin: auto;
+      
     }
   }
 
@@ -40,8 +41,8 @@
 
 .maintenanceImage {
   max-height: 150px;
-  border: 1px solid;
+  border: .5px solid;
   object-fit: contain;
-  border-radius: 10px 10px 0 0; /* Rounded corners on the top of the image */
+  border-radius: 10px 10px 10px 10px; /* Rounded corners on the top of the image */
 }
   

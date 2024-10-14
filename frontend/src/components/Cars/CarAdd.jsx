@@ -171,6 +171,9 @@ const CarAdd = () => {
                             ))}
                           </optgroup>
                         ))}
+                        <optgroup label="Others">
+                          <option value="Other">Other</option>
+                        </optgroup>
                       </Form.Select>
                     </Form.Group>
 
