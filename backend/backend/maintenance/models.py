@@ -9,4 +9,5 @@ class Maintenance(models.Model):
     mileage = models.PositiveBigIntegerField()
     next_mileage = models.PositiveIntegerField()
     description = models.CharField(max_length=1500)
+    value = models.PositiveBigIntegerField(default=0)
     car = models.ForeignKey(Car, related_name = 'maintenance', on_delete=models.CASCADE)
