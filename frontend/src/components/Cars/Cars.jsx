@@ -140,7 +140,7 @@ const Cars = ({ user }) => {
                             {car.mileage ? car.mileage : "N/A"}
                           </ListGroup.Item>
                         </ListGroup>
-                        <div className="text-center">
+                        <div className="text-center p-2">
                           <Button
                             variant="primary"
                             onClick={() =>
