@@ -3,7 +3,7 @@ import { Container, Row, Table, Col, Card, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FetchAllMaintenances } from "../../services/api";
-
+import { useNavigate } from "react-router-dom";
 import SpinnerBorder from "../../services/spinner";
 
 export default function Maintenaces() {
@@ -12,6 +12,7 @@ export default function Maintenaces() {
   const [maintenances, setMaintenances] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function FetchMaintenances() {
@@ -42,7 +43,12 @@ export default function Maintenaces() {
           ) : (
             <>
               <div className="text-center mt-5 pt-3">
-                <Button className="m-3">Add service</Button>
+                <Button
+                  onClick={() => navigate("/cars/maintenances/add")}
+                  className="m-3"
+                >
+                  Add service
+                </Button>
                 <h5>
                   Total spend:{" "}
                   <span className="text-danger">{totalValue.toFixed(2)}$</span>
@@ -64,8 +70,8 @@ export default function Maintenaces() {
 
                     <Card.Body>
                       <h5 className="card-title text-center">
-                        Value :{" "}
-                        <span className="text-danger">
+                        Cost :{" "}
+                        <span className={styles.Value}>
                           {maintenance.value.toFixed(2)}$
                         </span>
                       </h5>

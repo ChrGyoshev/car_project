@@ -48,4 +48,8 @@
   border-radius: 10px 10px 10px 10px;
   align-self: center; /* Rounded corners on the top of the image */
 }
+
+.Value {
+  color: darkred
+}
   
